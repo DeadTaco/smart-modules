@@ -1,0 +1,42 @@
+<!-- 
+    Place UI HTML snippets here.
+
+    There are some things you can do with your template to make specific things happen.
+    If you pass an array to a variable placeholder, the element containing that variable will
+    be cloned and given the next value in the array in its placeholder.
+
+    You can also add HTML tags in a variable to place the sibling content into that tag. 
+
+    Example:  Let's say your template contains: 
+        <li>{{somevar}}{{list}}</li>
+    
+    If the variable "list" is an array, the <li> element would be cloned for each element of that array, with the current array value placed in {{list}}.
+    
+    ** Putting variables into HTML Tags:
+        If the {{somevar}} variable value happened to be "<span class='myclass'>", the immediate {{list}} value would be placed into a span with the class "myclass".
+    
+    At this time, you cannot have multiple arrays inside a single element unless each array is within its own tag.
+    
+    Loops and logic statements are currently being developed!
+
+    You can have multiple templates in a single HTML file. Place each template within a <template> tag and include a name
+
+-->
+
+
+<template testtemplate>
+    <h1>
+        {{title}}
+    </h1>
+    A list with {{list.length}} items!
+    <ul>
+        <li>{{container}}{{list}}</li>
+    </ul>
+</template>
+
+
+<template my_template_name>
+    You should see some HTML here
+    {{html}}
+</template>
+

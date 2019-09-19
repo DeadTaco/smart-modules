@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Smart Module Examples</title>
+        <meta name="description" content="A small module loader for bundling only the modules you need into a single application">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+    </head>
+    <script src="../src/sm.core.js"></script>
+    <script src="../src/modules/sm.dialogs.js"></script>
+    <script src="../src/modules/sm.fileio.js"></script>
+    <body>
+        <h1>
+            Template Loader Example:  Loading templates\template.html
+        </h1>
+        The variables being assigned to the template are
+        <ul>
+            <li><pre>title =>       Loaded Successfully!</pre></li>
+            <li><pre>container =>   &lt;span class="myclass"&gt;</pre></li>
+            <li><pre>list =>        [1,2,3,4,5]</pre></li>
+        </ul>
+        The template will be placed below this line with the above variables defined
+        <hr>
+        <div id="templates">
+            
+        </div>
+    </body>
+    <script>
+       
+        if(!window.sm) window.sm = new SmartModule({
+            init: ()=> { 
+                doThings();
+            },
+            showModuleInfo: true
+        });
+        
+        function doThings() {
+            sm.dialog.loadTemplate("../src/templates/template.html");
+            
+        }
+        
+        // The API must be created as a new object before we begin adding modules
+        // Get HTML templates for UI elements and place them into the API root.templates object as accessible document fragments
+            // this.fileControl.loadTemplate("templates.html")
+            // .then(()=>{  });
+        // Main initialization thread - While optional, this prototype function will always run upon creation of the new library object if it exists
+        // Place your initialization code here
+    
+    </script>
+</html>
