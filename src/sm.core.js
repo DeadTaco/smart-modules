@@ -3,6 +3,7 @@ sm.core.js
 Smart Modules - Core functionality
 
 Written By Devin Crowley
+devin [at] devincrowley [dot] com
 
 -------------------------------------------------------------------------------------------------------------------------------- */
 
