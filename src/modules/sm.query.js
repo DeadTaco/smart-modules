@@ -1,7 +1,10 @@
-// Quick access to a query selector with chaining.  Can pass an optional function that maps each returned element to a function.  Can also pass it an existing node list
+// Quick access to a query selector with chaining.  Can pass an optional function that maps to each returned element.  Can also pass it an existing node list
 // Currently not used as a direct module, but instead as a prototype
 
-SmartModule.fn.module("$", function(querySelector) {
+// This module will show only as "$" with the description of "Single-function module loaded."
+// This is due to the fact that his module is loaded as a single function instead of as a multi-function object (no descriptor can be set)
+
+SmartModule.addModule("$", function(querySelector) {
     let thisNode = null;
     if(typeof querySelector == "string") {
         thisNode = document.querySelectorAll(querySelector);
@@ -13,6 +16,8 @@ SmartModule.fn.module("$", function(querySelector) {
         this.first = node[0];
         this.last = node[node.length-1];
         this.nodes = node,
+        this.description = ["query", "Tools for document element queries"];
+        // Hide an element
         this.hide = function() { 
             Array.from(node).map(e => {
                 if(e.style.display != "none") e.defStyle = e.style.display;
@@ -20,21 +25,25 @@ SmartModule.fn.module("$", function(querySelector) {
             });
             return new $($root, node);
         }
+        // Show and element
         this.show = function() { 
             Array.from(node).map(e => {
                 if(e.defStyle) { e.style.display = e.defStyle } else { e.style.display="inline"; }
             });
             return new $($root, node);
         }
+        // Run a function on each returned element
         this.each = function(fn) { 
             Array.from(node).map(e => { fn(e); });
             return new $($root, node);
         }
+        // Add an event to an element
         this.on = function(evt, fn) {
             Array.from(node).map(e => {
                 e.addEventListener(evt, fn);
             });
         }
+        // Set a DOM element value
         this.val = function(setValueTo) {
             if(setValueTo) {
                 Array.from(node).map(e => {
@@ -44,7 +53,11 @@ SmartModule.fn.module("$", function(querySelector) {
                 return node[0].value;
             }
         }
-        this.appendSnippet = function(path) {
+        this.append = function(doc) {
+            node[0].append(doc);
+        }
+        // Appends html from a remote URL
+        this.appendHtmlFromUrl = function(path) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
               if (this.readyState == 4 && this.status == 200) {
@@ -56,7 +69,7 @@ SmartModule.fn.module("$", function(querySelector) {
         }
         this.link = function(keyName, setterFunction) {
             
-            // Links a hard Csec.link variable to a UI element and vice-versa.  Only the first item from a query selector will be used.
+            // Links a variable to a UI element and vice-versa.  Only the first item from a query selector will be used.
             // An optional custom function (fn) may be passed to the setter so a function is run instead of setting its value
             // How does this work exactly?  You link a DOM element (input, checkbox, or other form element) to a SmartModule variable value.
             // If the SmartModule variable value changes, it changes the value in the DOM element as well.  This also works vice-versa.  If the DOM
@@ -108,5 +121,5 @@ SmartModule.fn.module("$", function(querySelector) {
     };
     let $root = this;
     return new $($root, thisNode);
-});
+},["query", "Tools for document queries"]);
 
