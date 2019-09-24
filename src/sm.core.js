@@ -9,10 +9,6 @@ Written By Devin Crowley
 "use strict";
 const SmartModule = (function() {
 
-    // Options
-
-    // Module States
-
     let allowMultipleInstances = false; // Set to true if you want to allow multiple instances of this library to be available.
     let collapseLoader = false; // Collapses the loaded modules into a single line in the console - Set to false for debugging issues
     let instances = 0;          // PRIVATE -- Tell us if smartModule is already instantiated
