@@ -1,4 +1,7 @@
 # **The Smart Modules API**
+### Version 1.0.0
+*This document is currently being updated to reflect the latest additions and changes to the API.*
+
 The Smart Module API is a small ES6+ Javascript framework for quickly binding multiple modules into a single package.  Each module has access to other modules that are loaded, as well as any variables within the API itself.
 
 ## Getting Started
