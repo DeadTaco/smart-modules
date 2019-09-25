@@ -7,7 +7,7 @@ The Smart Module API is a small ES6+ Javascript framework for quickly binding mu
 You will need to have the sm.core.js script loaded into your page.  It controls the loading of all other modules.
 To load modules, you can add their script to your page with a script source tag, or by using the Smart Module loader.
 
-Activate the smart module API with the `new` syntax.  There are some optional parameters that may be passed to the API, as seen here:
+Initialize the smart module API with the `new` syntax.  There are some optional parameters that may be passed to the API, as seen here:
 ```JAVASCRIPT
 const sm = new SmartModule({
     init: ()=> { 
