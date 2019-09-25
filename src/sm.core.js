@@ -24,9 +24,16 @@ const SmartModule = (function() {
         SmartModule.STATE_BUSY = 2;
         SmartModule.STATE_AWAIT = 3;        
 
-        if(!options) options = {};
+        // Custom (optional) options provided by the user
+        if(!options) options = {};  // Rather than work with "undefined", let's work with an empty object
         let useExistingReference = options.useExistingReference;
         let initFunction = options.init;
+        SmartModule.rootPath = options.rootPath || SmartModule.rootPath;
+        SmartModule.moduleDirectory = options.moduleDirectory || "modules";
+        // Make sure we have appropriate slashes within the full module path
+        if(SmartModule.moduleDirectory.charAt(SmartModule.moduleDirectory.length-1) == "/")  SmartModule.moduleDirectory = SmartModule.moduleDirectory.slice(0 ,SmartModule.moduleDirectory.length-1);
+        if(SmartModule.rootPath.charAt(SmartModule.rootPath.length-1) != "/")  SmartModule.rootPath += "/";
+        SmartModule.moduleAbsolutePath = SmartModule.rootPath + SmartModule.moduleDirectory;
 
         // useExistingReference tells us to return an already existing reference to this API if it exists
         instances++;
@@ -57,8 +64,8 @@ const SmartModule = (function() {
                 }
             }
         });
-        this.activeAsync = 0;
-        
+
+        this.activeAsync = 0; // Active number of asynchonous things happening in the background
 
         // Show a description of this application in the console window (Optional)
         if(this.description) console.info(`%c${this.description}`, "font-size:1.0em;font-weight:bold;background-color:black;color:yellow;padding:10px;min-width:500px;line-height:0.25em;text-align:center;");        
@@ -93,13 +100,12 @@ const SmartModule = (function() {
 
         // Loads a module from a file/URL
         // Note that this is a separate function from the SmartModule.loadModule function!  This one only becomes available after
-        // the smart module is initialized as a new object.         
-        this.loadModule = function(moduleName, noPath) {
+        // the smart module is initialized as a new object.
+        this.loadModule = function(moduleName) {
             if(!moduleName) throw "loadModule(moduleName): A module name or path is required but was not given!"
-            const rootPath = SmartModule.rootPath;
             let path = null;
             if(moduleName.search(".js") !== -1) path = moduleName;  // If a URL is given, load that.  If not, use the modules/sm.modulename.js location
-            if(!path) path= `${rootPath}modules/sm.${moduleName}.js`;
+            if(!path) path= `${SmartModule.absoluteModulePath}sm.${moduleName}.js`;
             var scriptTag = document.createElement("script"), // create a script tag
             firstScriptTag = document.getElementsByTagName("script")[0]; // find the first script tag in the document
             scriptTag.src = path; // set the source of the script to your script
@@ -113,20 +119,31 @@ const SmartModule = (function() {
         // Public access to the addModule function.  
         // Note that this is a separate function from the SmartModule.addmodule function!  This one only becomes available after
         // the smart module is initialized as a new object.        
-        this.addModule = function(moduleName, fn) {
-            addModule(moduleName, fn);
+        this.addModule = function(moduleName, moduleFunction, moduleInfo) {
+            moduleInfo = moduleInfo || {};
+            // Check if we have any descriptions, versions, or dependency requirements info for this module
+            if(typeof moduleFunction == object) {
+                moduleInfo.description = moduleFunction.description || moduleInfo.description;
+                moduleInfo.version = moduleFunction.version || moduleInfo.version;
+                moduleInfo.requires = moduleFunction.requires || moduleInfo.requires;
+            }            
+            addModule(moduleName, moduleFunction, moduleInfo);
         }
 
+        // When the API is first initialized, see which modules have been requested for loading and load each one
         function loadModules() {
             SmartModule.modules.map(module=>{
-                addModule(module.moduleName, module.moduleFunction);
+                addModule(module.moduleName, module.moduleFunction, module.moduleInfo);
             })
         }
         
         // Add modules to this API and still have access to root variables, objects, prototypes, and functions.
         // Checks for dependencies during the module loading process to make sure they're available, regardless
-        // of which modules are loaded first
-        function addModule(mod, fn) {
+        // of which modules are loaded first.  Description is optional and may be passed in the 'fn' arg instead.
+        function addModule(mod, fn, modInfo) {
+            modInfo = modInfo || {};
+            let description = modInfo.description || false;
+            let requirements = modInfo.requires;
             if(smartModule.prototype[mod]) throw new Error(`Warning!  A module with the name ${mod} already exists!  `);
             smartModule.prototype[mod] = fn;
 
@@ -136,20 +153,21 @@ const SmartModule = (function() {
             }
             
             // Dependency check
-            if(fn.requires) {
-                fn.requires.map(r=>{
+            if(requirements) {
+                requirements.map(r=>{
                     if(!smartModule.prototype[r] && SmartModule.moduleNames.indexOf(r) == -1) {
                         console.warn(`Module Dependency Issue:  Module "${mod}" requires module "${r}" which is wasn't found.  This may cause errors to be thrown!`)
                     }
                 });
             }
-            if(fn.description && options.showModuleInfo === true) {
-                $root.showModuleInfoApi(fn.description[0], fn.description[1]);
-                $root.modulesLoaded.push(`${mod} : ${fn.description[1]}`);
+            if(description && options.showModuleInfo === true) {
+                $root.showModuleInfoApi(description[0], description[1]);
+                $root.modulesLoaded.push(`${mod} : ${description[1]}`);
             } else if (options.showModuleInfo === true) {
                 $root.showModuleInfoApi(mod, "Single-function Module Loaded");
-                $root.modulesLoaded.push(`${mod} : Untitled Single-function Module`);
-            } else {
+                $root.modulesLoaded.push(`${mod} : Untitled Single-function Module`); {}
+            } 
+            else {
                 $root.modulesLoaded.push(`${mod} : No description`);
             }
         }
@@ -168,32 +186,21 @@ const SmartModule = (function() {
 // Adds modules to a module array which will be parsed after everything else is done loading.
 // This allows us to check dependencies between modules to be sure they're available after all
 // module files are done loading.
-SmartModule.addModule = function(moduleName, moduleFunction) {
+SmartModule.addModule = function(moduleName, moduleFunction, moduleInfo) {
+    moduleInfo = moduleInfo || {};
+    // Check if we have any descriptions, versions, or dependency requirements info for this module
+    if(typeof moduleFunction == "object") {
+        moduleInfo.description = moduleFunction.description || moduleInfo.description;
+        moduleInfo.version = moduleFunction.version || moduleInfo.version;
+        moduleInfo.requires = moduleFunction.requires || moduleInfo.requires;
+    }
     if(!this.modules) { this.modules = []; this.moduleNames = []; }
     if(this.moduleNames.includes(moduleName)) {
         throw `Module ${moduleName} tried to load but it conflicts with an already loaded module with the same name!`;
     }
-    this.modules.push({ moduleName : moduleName, moduleFunction : moduleFunction});
+    this.modules.push({ moduleName : moduleName, moduleFunction : moduleFunction, moduleInfo : moduleInfo});
     this.moduleNames.push(moduleName);
 };
-
-// Loads a module file from the modules directory or the path given (BEFORE initialization!)
-SmartModule.loadModule = function(moduleName) {
-    // If we have an array of files to load, cycle through and load all of them.
-    if(Array.isArray(moduleName)) {
-        moduleName.map(m=>SmartModule.loadModule(m));
-        return;
-    }
-    if(!moduleName) throw "SmartModule.loadModule(): A module name or path is required but was not given!"
-    const rootPath = SmartModule.rootPath;
-    let path = null;
-    if(moduleName.search(".js") !== -1) path = moduleName;  // If a URL is given, load that.  If not, use the modules/sm.modulename.js location
-    if(!path) path= `${rootPath}modules/sm.${moduleName}.js`;
-    var scriptTag = document.createElement("script"), // create a script tag
-    firstScriptTag = document.getElementsByTagName("script")[0]; // find the first script tag in the document
-    scriptTag.src = path; // set the source of the script to your script
-    firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag); // append the script to the DOM
-}
 
 // This let's us know the root path to sm.core.js for getting relative paths to the modules directory
 SmartModule.rootPath = (()=> {
@@ -203,9 +210,30 @@ SmartModule.rootPath = (()=> {
     return mydir;
 })();
 
+// Absolute path to modules:  This can be changed by the user with an option during the initialization of the API
+SmartModule.moduleAbsolutePath = SmartModule.rootPath + "modules";
+
+// Loads a module file from the modules directory or the path given (BEFORE initialization!)
+SmartModule.loadModule = function(moduleName) {
+    // If we have an array of files to load, cycle through and load all of them.
+    if(Array.isArray(moduleName)) {
+        moduleName.map(m=>SmartModule.loadModule(m));
+        return;
+    }
+    if(!moduleName) throw "SmartModule.loadModule(): A module name or path is required but was not given!"
+    let path = null;
+    if(moduleName.search(".js") !== -1) path = moduleName;  // If a URL is given, load that.  If not, use the modules/sm.modulename.js location
+    if(!path) path= `${SmartModule.rootPath}modules/sm.${moduleName}.js`;
+    var scriptTag = document.createElement("script"), // create a script tag
+    firstScriptTag = document.getElementsByTagName("script")[0]; // find the first script tag in the document
+    scriptTag.src = path; // set the source of the script to your script
+    firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag); // append the script to the DOM
+}
+
 // File reading and writing
 SmartModule.addModule("fileio", ({
         description : ["fileio", "File Controller: input and output (Built-in module)"],
+        version : "1.0",
         // Retrieves a file, then runs the function assigned to fn
         getFile : function(path, fn) {
             this.root.currentState = SmartModule.STATE_LOADFILE; // APP STATES

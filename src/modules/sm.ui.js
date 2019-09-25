@@ -3,6 +3,7 @@ SmartModule.addModule("ui", (
     {
         description : ["sm.ui.js", "User interface: Dynamic HTML, text popups, and user interface objects"],
         requires : ["fileio"],
+        version : "1.0",
         // Loads a template html file and appends it to the dialog variable "template".  This returns a promise, so you can use the ().then operator for async operations
         loadTemplate : function(templateName) {
             let root = this.root;

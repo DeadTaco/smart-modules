@@ -23,7 +23,7 @@
         The variables being assigned to the template are
         <ul>
             <li><pre>title =>       Loaded Successfully!</pre></li>
-            <li><pre>container =>   &lt;span class="myclass"&gt;</pre></li>
+            <li><pre>container =>   &lt;span style="color:blue"&gt;</pre></li>
             <li><pre>list =>        ["dog","cat","gorilla","snake","aardvark"]</pre></li>
         </ul>
         The template will be placed below this line with the above variables defined
@@ -52,7 +52,7 @@
                 sm.$("#templatetext").val((newDiv.innerHTML));
                     sm.$("#templates").append(sm.ui.htmlFromTemplate('testtemplate', { 
                         title : 'Loaded Successfully!', 
-                        container : '<span class="myclass">', 
+                        container : '<span style="color:blue;">', 
                         list : ["dog","cat","gorilla","snake","aardvark"]
                     }));
                 }

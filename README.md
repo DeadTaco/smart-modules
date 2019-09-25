@@ -1,6 +1,5 @@
 # **The Smart Modules API**
-### Version 1.0.0
-*This document is currently being updated to reflect the latest additions and changes to the API.*
+### *API Version 1.0.0 -- Documentation version 1.0*
 
 The Smart Module API is a small ES6+ Javascript framework for quickly binding multiple modules into a single package.  Each module has access to other modules that are loaded, as well as any variables within the API itself.
 
@@ -14,12 +13,16 @@ const sm = new SmartModule({
     init: ()=> { 
         doThings();     // Run a function after initialization
     },
-    showModuleInfo: true   // Show info for loaded modules in the console
+    showModuleInfo: true   // Show info for loaded modules in the console,
 });
 ```
 
 * `init` : *fn* -- will run the given function after the API is fully initialized
 * `showModuleInfo` : *bool* -- If true, this will show the loaded modules and their information in the browser console for debugging purposes
+* `moduleDirectory` -- *Default is "modules"* Sets the directory name of your modules directory if it is different from the default `./modules` location
+* `rootPath` -- *Default is the absolute path to sm.core.js* - Sets the path to check for resources such as templates and modules.  If `moduleDirectory` isn't set by the user, the path to modules will be `rootPath/modules`.  Note that the `rootPath` variable always ends itself with a slash, even if you didn't add it at yourself.
+
+A variable named `SmartModule.moduleAbsolutePath` will be generated once the API has been initialized.  This will give you the absolute path to the modules directory should you need it.
 
 ---
 ### **Using the Smart Modules loader**
@@ -27,7 +30,7 @@ You will need a `modules` directory placed in the same location as the sm.core.j
 
 It's not mandatory for modules to be located in the modules directory, but makes it easier to organize the modules.
 
-To load a module, you will need to create a new Smart Modules object variable and begin loading the modules with the .addModule function.  The Smart Module will check the modules directory for a file titled `sm.modulename.js` where modulename is the module name.  Be sure your module name is titled the same as the filename between sm. and .js
+To load a module, *prior to initializing the API with `new`* you will need to use the `SmartModule.addModule` function.  The Smart Module will check the modules directory for a file titled `sm.modulename.js` where modulename is the module name.  Be sure your module name is titled the same as the filename between sm. and .js
 ```JAVASCRIPT
 SmartModule.loadModule("mymodule"); // Loads modules/sm.mymodule.js
 ```
@@ -47,15 +50,27 @@ SmartModule.loadModule("https://somedomain.com/sm.modulename.js");
 #### Adding modules *before* creating a new smart module instance
 It is best practice to load all modules *before initializing the API with the `new` operator*.  This allows all modules to run dependency checks prior to loading.  
 
-The following steps are for creating new modules *only* if you have not yet added an instance of the Smart Module API to your project with the `new` operator.  To define a new module, use `SmartModule.addModule(moduleName, moduleFunction)`.
+The following steps are for creating new modules *only* if you have not yet added an instance of the Smart Module API to your project with the `new` operator.  To define a new module, use `SmartModule.addModule(moduleName, moduleFunction, `*<`optional`*>` moduleInfoObject)`.
 - `moduleName` is the object name that will be used to access the module.  For example, assuming `sm` is the variable name given to your instance of the SmartModule and `moduleName` is "mymodule", then you would access it and its functions with `sm.mymodule`
-
-Modules are typically collections of functions, variables, and objects, but they can also be a single function.  
-To define a collection, the syntax is fairly basic:
+- `moduleFunction` defines the object that defines the functionality of the module.  It can be a single function, a *collection* of functions and items (a javascript object), a string, a number, etc.
+- `moduleInfoObject` is an optional object that you can pass to the function that describes your module.  
+    - The parameters that may be passed are as follows:
+    ```JAVASCRIPT
+    { 
+        description : ["module name", "A description of my module"],
+        requires : ["fileio", "ui", "anothermodule"],
+        version : "1.0"
+    }
+    ```
+    **_An explanation of these variables is found in the next section.  If you are using a *collection* object you can define these from inside the object instead as seen in the next section as well._**
+    
+Modules are typically collections of functions, variables, and objects, but they can also be a single function or other element.  
+To define a *collection*, the syntax is fairly basic:
 ```JAVASCRIPT
 SmartModule.addModule("mymodule", ({
         description : ["My Module", "This is my custom smart module!"],
         requires : ["fileio", "dialog"],
+        version : "1.0",
         add : function(a,b) {
             return a + b; 
         },
@@ -66,9 +81,10 @@ SmartModule.addModule("mymodule", ({
 );
 ```
 
-Notice the optional `description` and `requires` variables:
+Notice the optional `description`, `requires`, and `version` variables:
 - `description` *array* : (Optional) This passes a description of the module to the console, as well as to the `SmartModule.modules` variable so you can see which modules have been loaded, mainly for debugging purposes.  The first value is the module name, and the second is the description.
 - `requires` *array* : (Optional) A list of module dependencies for this module to run properly.  If your module requires functionality from another module, add it to the list.  A warning will be given if a module is loaded and none of its dependencies can be found.
+- `version` *string* : The current version of this module.  This may become important if another module relies on the use of this module, but needs a version older or newer than the current version.
 
 When you create a new instance of the API with a `new` operator, your modules added with the `SmartModule.addModule` function will load and initialize.  You cannot add new modules with the `SmartModule.addModule` function after creating a new instance of the API.  Instead, you will have to use the post-initialized functionality as seen here:
 
@@ -232,7 +248,7 @@ Notice how the `<li>` tag was duplicated to show each value of the `list` array.
 Take a look back at *Figure B*.  If you have a variable defined as an HTML tag, it will add that tag and include any subsequent variables into it.\
 `<li>{{container}}{{list}}</li>` is replacing `{{container}}` with a `<span>` and also including the `{{list}}` variable within the `<span>`.  
 
-One thing you cannot do, however, is have to array variables within the same tag.  For example, if we had:
+One thing you cannot do, however, is have two array variables within the same tag.  For example, if we had:
 ```HTML
 <li>{{somelist}}{{list}}</li>
 ```

@@ -1,7 +1,7 @@
 // Quick access to a query selector with chaining.  Can pass an optional function that maps to each returned element.  Can also pass it an existing node list
 // Currently not used as a direct module, but instead as a prototype
 
-// This module will show only as "$" with the description of "Single-function module loaded."
+// This module is accessed with the "$" function with a module description of "query"
 // This is due to the fact that his module is loaded as a single function instead of as a multi-function object (no descriptor can be set)
 
 SmartModule.addModule("$", function(querySelector) {
@@ -17,6 +17,7 @@ SmartModule.addModule("$", function(querySelector) {
         this.last = node[node.length-1];
         this.nodes = node,
         this.description = ["query", "Tools for document element queries"];
+        this.version = "1.0",
         // Hide an element
         this.hide = function() { 
             Array.from(node).map(e => {
@@ -121,5 +122,5 @@ SmartModule.addModule("$", function(querySelector) {
     };
     let $root = this;
     return new $($root, thisNode);
-},["query", "Tools for document queries"]);
+},{ description : ["query", "Tools for document queries, accessed via '$'"], requires : null, version : "1.0" });
 
