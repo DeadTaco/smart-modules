@@ -91,7 +91,7 @@ const SmartModule = (function() {
         document.onreadystatechange = function () {
             if (document.readyState == "complete") {
                 loadModules();
-                if(initFunction) initFunction();
+                if(initFunction) initFunction($root);
             }
         }
        //  smartModule.fn = smartModule.prototype;   // Make it easier to design prototypes via simple fn (function)
@@ -149,28 +149,44 @@ const SmartModule = (function() {
             SmartModule.modules.map(module=>{
                 addModule(module.moduleName, module.moduleFunction, module.moduleInfo);
             })
+            if(SmartModule.moduleExtensions) {
+                SmartModule.moduleExtensions.map(module=>{
+                    addModule(module.moduleName, module.moduleFunction, module.moduleInfo, true);
+                })            
+            }
         }
         
         // Add modules to this API and still have access to root variables, objects, prototypes, and functions.
         // Checks for dependencies during the module loading process to make sure they're available, regardless
         // of which modules are loaded first.  Description is optional and may be passed in the 'fn' arg instead.
-        function addModule(mod, fn, modInfo) {
+        // If appendToModule is true, this module will extend an existing module and add functionality to it
+        function addModule(mod, fn, modInfo, appendToModule = false) {
             modInfo = modInfo || {};
             let description = modInfo.description || false;
             let requirements = modInfo.requires;
-            if(smartModule.prototype[mod]) throw new Error(`Warning!  A module with the name ${mod} already exists!  `);
-            smartModule.prototype[mod] = fn;
-
-            if(typeof fn === "object") {
-                smartModule.prototype[mod].root = $root; // Assign a root variable to any collection modules
-                smartModule.prototype[mod].moduleName = mod; // Assign a module name variable to any collection modules
+            if(!appendToModule) {
+                if(smartModule.prototype[mod]) throw new Error(`Warning!  A module with the name ${mod} already exists!  `);
+                smartModule.prototype[mod] = fn;
+                if(typeof fn === "object") {
+                    smartModule.prototype[mod].root = $root; // Assign a root variable to any collection modules
+                    smartModule.prototype[mod].moduleName = mod; // Assign a module name variable to any collection modules
+                }
+            } else {
+                // We're extending an already existing module (appending to the module object).
+                if(!smartModule.prototype[mod]) {
+                    throw `Cannot extend module "${mod}" since it's not defined or loaded!  The extension description is: ${modInfo.description[0]}, ${modInfo.description[1]}`;
+                }
+                if(typeof smartModule.prototype[mod] == "object") {
+                    smartModule.prototype[mod] = { ...smartModule.prototype[mod], ...fn };
+                } else {
+                    throw `Cannot extend module "${mod}" since it's not a collection!  The extension description is: ${modInfo.description[0]}, ${modInfo.description[1]}`;
+                }
             }
-            
             // Dependency check
             if(requirements) {
                 requirements.map(r=>{
                     if(!smartModule.prototype[r] && SmartModule.moduleNames.indexOf(r) == -1) {
-                        console.warn(`Module Dependency Issue:  Module "${mod}" requires module "${r}" which is wasn't found.  This may cause errors to be thrown!`)
+                        console.warn(`Module Dependency Issue:  Module "${mod}" requires module "${r}" which is wasn't found.  This may cause errors to be thrown!`);
                     }
                 });
             }
@@ -183,7 +199,7 @@ const SmartModule = (function() {
             } 
             else {
                 $root.modulesLoaded.push(`${mod} : No description`);
-            }
+            }            
         }
     }
     
@@ -216,6 +232,19 @@ SmartModule.addModule = function(moduleName, moduleFunction, moduleInfo) {
     this.moduleNames.push(moduleName);
 };
 
+// Extends an already defined module by appending to the existing module if it's an object
+SmartModule.extendModule = function(moduleName, moduleFunction, moduleInfo) {
+    moduleInfo = moduleInfo || { description : [moduleName, "No Module Extension description given"] };
+    // Check if we have any descriptions, versions, or dependency requirements info for this module
+    if(typeof moduleFunction == "object") {
+        moduleInfo.description = moduleFunction.description || moduleInfo.description;
+        moduleInfo.version = moduleFunction.version || moduleInfo.version;
+        moduleInfo.requires = moduleFunction.requires || moduleInfo.requires;
+    }
+    if(!this.moduleExtensions) { this.moduleExtensions = []; }
+    this.moduleExtensions.push({ moduleName : moduleName, moduleFunction : moduleFunction, moduleInfo : moduleInfo});
+};
+
 // This let's us know the root path to sm.core.js for getting relative paths to the modules directory
 SmartModule.rootPath = (()=> {
     var scripts= document.getElementsByTagName('script');
@@ -238,10 +267,10 @@ SmartModule.loadModule = function(moduleName) {
     let path = null;
     if(moduleName.search(".js") !== -1) path = moduleName;  // If a URL is given, load that.  If not, use the modules/sm.modulename.js location
     if(!path) path= `${SmartModule.rootPath}modules/sm.${moduleName}.js`;
-    var scriptTag = document.createElement("script"), // create a script tag
-    firstScriptTag = document.getElementsByTagName("script")[0]; // find the first script tag in the document
+    var scriptTag = document.createElement("script"); // create a script tag
     scriptTag.src = path; // set the source of the script to your script
-    firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag); // append the script to the DOM
+    var scriptContainer = document.getElementsByTagName("script")[0].parentElement;    
+    scriptContainer.append(scriptTag); // append the script to the DOM
 }
 
 // File reading and writing
