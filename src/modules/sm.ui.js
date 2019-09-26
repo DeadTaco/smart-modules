@@ -24,12 +24,10 @@ SmartModule.addModule("ui", (
         // Process a template and assign variables to it.  Return a new document fragment with the template variables replaced with actual values.
         // This will NOT modify the template itself and only return a clone of it.
         htmlFromTemplate(templateName, values) {
-            let root = this.root;
             let $this = this;
             if(!this.template) return false;  // Templates are loaded and defined within the API init() function.  Don't proceed if they don't exist!
             if(!this.template[templateName]) {
                 throw new Error(`in SmartModule "${this.moduleName}" -- Cannot find a template named "${templateName}"`);
-                return false;
             }
 
             let newFragment = this.template[templateName].cloneNode(1);    // Duplicate the template node so we don't affect the template itself
@@ -39,11 +37,6 @@ SmartModule.addModule("ui", (
                 if(newNode.childNodes.length > 0) {
                     Array.from(newNode.childNodes).map(e=>parseNode(e));
                 } else {
-                    let newContent = newNode.textContent;
-                    
-                    //  Object.keys(values).map(val => {
-                    //     parseKey(val);
-                    // });
                     parseLocalNode(newNode);
                    
                     function parseLocalNode(thisNode) {
