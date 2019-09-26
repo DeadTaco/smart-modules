@@ -33,7 +33,7 @@ You will need a `modules` directory placed in the same location as the sm.core.j
 
 It's not mandatory for modules to be located in the modules directory, but makes it easier to organize the modules.
 
-To load a module, you will need to use the modules option in the `new SmartModule({*config options*})` function.  The Smart Module will check the modules directory for a file titled `sm.modulename.js` where modulename is the module name.  Be sure your module name is titled the same as the filename between sm. and .js
+To load a module, you will need to use the modules option in the `new SmartModule({`*`config options`*`})` function.  The Smart Module will check the modules directory for a file titled `sm.modulename.js` where modulename is the module name.  Be sure your module name is titled the same as the filename between sm. and .js
 
 Alternatively, you can add your module before initialization with the following syntax:
 ```JAVASCRIPT
