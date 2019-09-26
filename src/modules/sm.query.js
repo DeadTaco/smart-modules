@@ -1,8 +1,6 @@
 // Quick access to a query selector with chaining.  Can pass an optional function that maps to each returned element.  Can also pass it an existing node list
-// Currently not used as a direct module, but instead as a prototype
 
-// This module is accessed with the "$" function with a module description of "query"
-// This is due to the fact that his module is loaded as a single function instead of as a multi-function object (no descriptor can be set)
+// This single-function module is accessed with "$" but is loaded from "sm.query.js"
 
 SmartModule.addModule("$", function(querySelector) {
     let thisNode = null;
