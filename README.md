@@ -22,7 +22,7 @@ const sm = new SmartModule({
 * `showModuleInfo` : *bool* -- If true, this will show the loaded modules and their information in the browser console for debugging purposes
 * `modules` : *array* -- An array of modules to load during the initialization phase.  You can include a full path to the module filename or just the module name itself.  See *Using the Smart Modules Loader* section below.
 * `moduleDirectory` -- *Default is "modules"* -- Sets the directory name of your modules directory if it is different from the default `./modules` location
-* `rootPath` -- *Default is the absolute path to sm.core.js* - Sets the path to check for resources such as templates and modules.  If `moduleDirectory` isn't set by the user, the path to modules will be `rootPath/modules`.  Note that the `rootPath` variable always ends itself with a slash, even if you didn't add it at yourself.
+* `rootPath` -- *Default is the absolute path to sm.core.js* - Sets the path to check for resources such as templates and modules.  If `moduleDirectory` isn't set by the user, the path to modules will be `rootPath/modules`.  Note that the `rootPath` variable automatically adds a slash to the end if one wasn't included.
 * `allowMultipleInstances` *bool* -- *Default is false* -- Allows multiple instances of the API to run simultaneously.  It's strongly recommended that you **do not** allow multiple instances as some modules may rely on having only a single instance available.  This forcefully allows it.
 
 A variable named `SmartModule.moduleAbsolutePath` will be generated once the API has been initialized.  This will give you the absolute path to the modules directory should you need it.
