@@ -38,7 +38,7 @@ const SmartModule = (function() {
         // Make sure we have appropriate slashes within the full module path
         if(SmartModule.moduleDirectory.charAt(SmartModule.moduleDirectory.length-1) == "/")  SmartModule.moduleDirectory = SmartModule.moduleDirectory.slice(0 ,SmartModule.moduleDirectory.length-1);
         if(SmartModule.rootPath.charAt(SmartModule.rootPath.length-1) != "/")  SmartModule.rootPath += "/";
-        SmartModule.moduleAbsolutePath = SmartModule.rootPath + SmartModule.moduleDirectory;
+        SmartModule.moduleAbsolutePath = SmartModule.rootPath + SmartModule.moduleDirectory + "/";
 
         // Allows accessing the active smart module session from any module as an alternative to the "moduleName.root" variable.  
         // Note that this variable will break if you allow multiple instances of the API to be running simultaneously! 
@@ -119,7 +119,7 @@ const SmartModule = (function() {
             if(!moduleName) throw "loadModule(moduleName): A module name or path is required but was not given!"
             let path = null;
             if(moduleName.search(".js") !== -1) path = moduleName;  // If a URL is given, load that.  If not, use the modules/sm.modulename.js location
-            if(!path) path= `${SmartModule.absoluteModulePath}sm.${moduleName}.js`;
+            if(!path) path= SmartModule.moduleAbsolutePath + `sm.${moduleName}.js`;
             var scriptTag = document.createElement("script"), // create a script tag
             firstScriptTag = document.getElementsByTagName("script")[0]; // find the first script tag in the document
             scriptTag.src = path; // set the source of the script to your script
@@ -225,7 +225,7 @@ SmartModule.rootPath = (()=> {
 })();
 
 // Absolute path to modules:  This can be changed by the user with an option during the initialization of the API
-SmartModule.moduleAbsolutePath = SmartModule.rootPath + "modules";
+SmartModule.moduleAbsolutePath = SmartModule.rootPath + "modules/";
 
 // Loads a module file from the modules directory or the path given (BEFORE initialization!)
 SmartModule.loadModule = function(moduleName) {
