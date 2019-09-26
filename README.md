@@ -33,7 +33,7 @@ You will need a `modules` directory placed in the same location as the sm.core.j
 
 It's not mandatory for modules to be located in the modules directory, but makes it easier to organize the modules.
 
-To load a module, you will need to use the modules option in the `new SmartModule({`*`config options`*`})` function.  The Smart Module will check the modules directory for a file titled `sm.modulename.js` where modulename is the module name.  Be sure your module name is titled the same as the filename between sm. and .js
+To load a module, you will need to use the modules option in the `new SmartModule({`*`config options`*`})` function.  The Smart Module will check the modules directory for a file titled `sm.modulename.js` where modulename is the module name.  Be sure the provided module name is titled the same as the filename between sm. and .js
 
 Alternatively, you can add your module before initialization with the following syntax:
 ```JAVASCRIPT
@@ -46,24 +46,24 @@ SmartModule.loadModule("https://somedomain.com/sm.modulename.js");
 
  The SmartModule API has a variable available for you named `SmartModule.rootPath` to get the absolute path to the sm.core.js file.  This can be used to place your modules into your own custom directory located relative to the sm.core.js file.  Please note that if you loaded the sm.core.js file through an ajax or dynamic load script call, the `SmartModule.rootPath` variable may be incorrect.  This will also affect loading modules without providing a full path to the module file as the `SmartModule.rootPath` is used to locate the modules directory.
 
-*Note: For debugging, during development time it may be preferable to load your module with a `<script>` tag. Errors may not show which line they occurred on in a dynamically loaded script*
+*Note: For debugging, during development time it may be preferable to load your module with a `<script>` tag. Errors may not show which line they occurred on in a dynamically loaded script*\
 
 ---
 ### **Creating and Defining Modules**
 
 #### <u>Defining modules *before* creating a new smart module instance</u>
 It is best practice to load or define all modules *before initializing the API with the `new` operator*.  This allows all modules to run dependency checks prior to loading.  Hot-loading modules after initialization is allowed, however.  
-*Note that `addModule` defines a module whereas `loadModule` loads a module from a file/URL*
+*Note that `addModule` defines a module whereas `loadModule` loads a module from a file/URL.  The module name defined with `addModule` does not need to match its filename*
 
 The following steps are for creating new modules *only* if you have not yet added an instance of the Smart Module API to your project with the `new` operator.  To define a new module, use 
 ```JAVASCRIPT
-SmartModule.addModule(moduleName, moduleFunction, [optional moduleInfoObject]);
+SmartModule.addModule( moduleName, moduleFunction, optional {moduleInfo} );
 ```
 
 
 - `moduleName` is the object name that will be used to access the module.  For example, assuming `sm` is the variable name given to your instance of the SmartModule and `moduleName` is "mymodule", then you would access it and its functions with `sm.mymodule`
 - `moduleFunction` defines the object that handles the functionality of the module.  It can be a single function, a *collection* of functions and items (a javascript object), a string, a number, etc.
-- `moduleInfoObject` is an optional object that you can pass to the function that describes your module.  
+- `moduleInfo` is an optional `key : value` object that you can pass to the function that describes your module.  
     - The parameters that may be passed are as follows:
     ```JAVASCRIPT
     { 
@@ -114,7 +114,7 @@ If you've already initialized the API, the SmartModule.addModule function will n
         })
     );
 ```
-**It is typically better** to load the modules **before** initializing the API, but hot-loading modules is allowed.
+**It is typically better** to load the modules **before** initializing the API, but hot-loading modules is allowed.  If a module with the same name has already been loaded, an error will be thrown to let you know there's a conflict.
 
 #### <u>Accessing other modules and their variables/functions from your collection</u>
 
