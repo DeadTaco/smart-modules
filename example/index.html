@@ -2,7 +2,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Smart Module Examples - Dialog Module: Templates</title>
+        <title>Smart Module Examples - UI Module: Templates</title>
         <meta name="description" content="A small module loader for bundling only the modules you need into a single application">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -16,7 +16,7 @@
         body { font-family: sans-serif; }
     </style>
     <body>
-        <h1>Smart Module Examples - Dialog Module: Templates</h1>
+        <h1>Smart Module Examples - sm.ui.js UI Module: Templates</h1>
         <h2>
             Template Loading and Parsing Example:  Loading templates\template.html
         </h2>
@@ -35,14 +35,12 @@
         </div>
     </body>
     <script>
-
-    SmartModule.loadModule(["ui", "query"]);    // Load your modules BEFORE initializing!
-
         if(!window.sm) window.sm = new SmartModule({
             init: ()=> { 
                 doThings();
             },
-            showModuleInfo: true
+            showModuleInfo: true,
+            modules: ["ui", "query"]
         });
         
         function doThings() {

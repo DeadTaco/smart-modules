@@ -13,46 +13,56 @@ const sm = new SmartModule({
     init: ()=> { 
         doThings();     // Run a function after initialization
     },
-    showModuleInfo: true   // Show info for loaded modules in the console,
+    showModuleInfo: true,   // Show info for loaded modules in the console,
+    modules: ["ui", "query"]
 });
 ```
 
 * `init` : *fn* -- will run the given function after the API is fully initialized
 * `showModuleInfo` : *bool* -- If true, this will show the loaded modules and their information in the browser console for debugging purposes
-* `moduleDirectory` -- *Default is "modules"* Sets the directory name of your modules directory if it is different from the default `./modules` location
+* `modules` : *array* -- An array of modules to load during the initialization phase.  You can include a full path to the module filename or just the module name itself.  See *Using the Smart Modules Loader* section below.
+* `moduleDirectory` -- *Default is "modules"* -- Sets the directory name of your modules directory if it is different from the default `./modules` location
 * `rootPath` -- *Default is the absolute path to sm.core.js* - Sets the path to check for resources such as templates and modules.  If `moduleDirectory` isn't set by the user, the path to modules will be `rootPath/modules`.  Note that the `rootPath` variable always ends itself with a slash, even if you didn't add it at yourself.
+* `allowMultipleInstances` *bool* -- *Default is false* -- Allows multiple instances of the API to run simultaneously.  It's strongly recommended that you **do not** allow multiple instances as some modules may rely on having only a single instance available.  This forcefully allows it.
 
 A variable named `SmartModule.moduleAbsolutePath` will be generated once the API has been initialized.  This will give you the absolute path to the modules directory should you need it.
 
 ---
 ### **Using the Smart Modules loader**
-You will need a `modules` directory placed in the same location as the sm.core.js file unless you want to manually assign a path to your modules.  All of your modules should be placed into that directory if you want to use the modules loader without using the optional `path` parameter.
+You will need a `modules` directory placed in the same location as the sm.core.js file unless you want to manually assign a path to your modules.  All of your modules should be placed into that directory if you want to use the modules loader by providing only a module name.
 
 It's not mandatory for modules to be located in the modules directory, but makes it easier to organize the modules.
 
-To load a module, *prior to initializing the API with `new`* you will need to use the `SmartModule.addModule` function.  The Smart Module will check the modules directory for a file titled `sm.modulename.js` where modulename is the module name.  Be sure your module name is titled the same as the filename between sm. and .js
+To load a module, you will need to use the modules option in the `new SmartModule({*config options*})` function.  The Smart Module will check the modules directory for a file titled `sm.modulename.js` where modulename is the module name.  Be sure your module name is titled the same as the filename between sm. and .js
+
+Alternatively, you can add your module before initialization with the following syntax:
 ```JAVASCRIPT
 SmartModule.loadModule("mymodule"); // Loads modules/sm.mymodule.js
 ```
-
-**Optionally, a full path can be provided to the module file you wish to load.  For example:**
+*Optionally*, a full path can be provided to the module file you wish to load.  For example:
 ```JAVASCRIPT
 SmartModule.loadModule("https://somedomain.com/sm.modulename.js");
  ```
 
- The SmartModule API has a variable available for you named `SmartModule.rootPath` to get the absolute path to the sm.core.js file.  This can be used to place your modules into your own custom directory located relative from the sm.core.js file.  Please note that if you loaded the sm.core.js file through an ajax or dynamic load script call, the `SmartModule.rootPath` variable may be incorrect.  This will also affect loading modules without providing a full path to the module file as the `SmartModule.rootPath` is used to locate the modules directory.
+ The SmartModule API has a variable available for you named `SmartModule.rootPath` to get the absolute path to the sm.core.js file.  This can be used to place your modules into your own custom directory located relative to the sm.core.js file.  Please note that if you loaded the sm.core.js file through an ajax or dynamic load script call, the `SmartModule.rootPath` variable may be incorrect.  This will also affect loading modules without providing a full path to the module file as the `SmartModule.rootPath` is used to locate the modules directory.
 
 *Note: For debugging, during development time it may be preferable to load your module with a `<script>` tag. Errors may not show which line they occurred on in a dynamically loaded script*
 
 ---
-### **Creating Modules**
+### **Creating and Defining Modules**
 
-#### Adding modules *before* creating a new smart module instance
-It is best practice to load all modules *before initializing the API with the `new` operator*.  This allows all modules to run dependency checks prior to loading.  
+#### <u>Defining modules *before* creating a new smart module instance</u>
+It is best practice to load or define all modules *before initializing the API with the `new` operator*.  This allows all modules to run dependency checks prior to loading.  Hot-loading modules after initialization is allowed, however.  
+*Note that `addModule` defines a module whereas `loadModule` loads a module from a file/URL*
 
-The following steps are for creating new modules *only* if you have not yet added an instance of the Smart Module API to your project with the `new` operator.  To define a new module, use `SmartModule.addModule(moduleName, moduleFunction, `*<`optional`*>` moduleInfoObject)`.
+The following steps are for creating new modules *only* if you have not yet added an instance of the Smart Module API to your project with the `new` operator.  To define a new module, use 
+```JAVASCRIPT
+SmartModule.addModule(moduleName, moduleFunction, [optional moduleInfoObject]);
+```
+
+
 - `moduleName` is the object name that will be used to access the module.  For example, assuming `sm` is the variable name given to your instance of the SmartModule and `moduleName` is "mymodule", then you would access it and its functions with `sm.mymodule`
-- `moduleFunction` defines the object that defines the functionality of the module.  It can be a single function, a *collection* of functions and items (a javascript object), a string, a number, etc.
+- `moduleFunction` defines the object that handles the functionality of the module.  It can be a single function, a *collection* of functions and items (a javascript object), a string, a number, etc.
 - `moduleInfoObject` is an optional object that you can pass to the function that describes your module.  
     - The parameters that may be passed are as follows:
     ```JAVASCRIPT
@@ -88,8 +98,8 @@ Notice the optional `description`, `requires`, and `version` variables:
 
 When you create a new instance of the API with a `new` operator, your modules added with the `SmartModule.addModule` function will load and initialize.  You cannot add new modules with the `SmartModule.addModule` function after creating a new instance of the API.  Instead, you will have to use the post-initialized functionality as seen here:
 
-#### Adding modules after the API has already been initalized with the `new` operator
-If you've already initialized the API, you'll lose access to the SmartModule.addModule function.  Instead, you will have to rely on the instance of the API you defined with the `new` operator and use its `addModule` function.  It works exactly the same way as the `SmartModule.addModule` function, but if you have dependencies, they will have to be loaded in the order of their needs.  It is always best to load the modules **before** initializing the API.  For example:
+#### <u>Defining modules after the API has already been initalized with the `new` operator (module *"Hot-Loading"*)</u>
+If you've already initialized the API, the SmartModule.addModule function will no longer register added modules.  Instead, you will have to rely on the instance of the API you defined with the `new` operator and use its `addModule` function.  It works exactly the same way as the `SmartModule.addModule` function, but if you have dependencies, they will have to be loaded in the order of their needs.    For example:
 ```JAVASCRIPT
     const sm = new SmartModule();
     sm.addModule("mymodule", ({
@@ -104,8 +114,9 @@ If you've already initialized the API, you'll lose access to the SmartModule.add
         })
     );
 ```
+**It is typically better** to load the modules **before** initializing the API, but hot-loading modules is allowed.
 
-#### Accessing other modules and their variables/functions from your collection
+#### <u>Accessing other modules and their variables/functions from your collection</u>
 
 When you define a new module as a collection, it is given its own variable named `root`.  This gives you access to the core smart module definition and any modules it has loaded.  Take a look at the following:
 ```JAVASCRIPT
@@ -125,8 +136,7 @@ SmartModule.addModule("mymodule", ({
 ```
 `this.root.fileio.readfile` is accessing the fileio module and utilizing its `readFile` function.  It is always preceded with `this` since it is a variable assigned only to your module.  You will always need to use the `this.root` variable in a collection of functions if you want access to other modules.
 
-*Can't I just grab functions from the `SmartModule.modules` array?*  
-You can, but that is an array without any direct pointers to the module functions.  You'd have to access the modules index number and then its function, such as `SmartModule.modules[0].moduleFunction.someFunction`.  Having `this.root` available to you makes it much easier.
+**Alternatively, you may retrieve the initialized/active Smart Module object by reading the `SmartModule.activeInstance` variable.**  However, if you configure the API to be able to run multiple instances simultaneously with the `allowMultipleInstances` argument, *this variable will only show the most recently initialized instance* and may break your modules if they rely on it.  If your module utilizes the `SmartModule.activeInstance` variable, you may want to check that the `SmartModule.instances` variable is not greater than 1.
 
 #### Creating a `single function` or `single value` module
 You can pass any type of element to the `SmartModule.addModule` function.  This includes a single function or even just a variable or object.

@@ -22,11 +22,16 @@ const SmartModule = (function() {
         SmartModule.STATE_IDLE = 0;
         SmartModule.STATE_GETFILE = 1;
         SmartModule.STATE_BUSY = 2;
-        SmartModule.STATE_AWAIT = 3;        
+        SmartModule.STATE_AWAIT = 3;
+
+        if(!SmartModule.instances) SmartModule.instances = 0;
+        SmartModule.instances++;
+        instances = SmartModule.instances;  // Private variable - We need to know how many instances are running prior to initialization.  Passed back to the pre-initialized state.
 
         // Custom (optional) options provided by the user
         if(!options) options = {};  // Rather than work with "undefined", let's work with an empty object
-        let useExistingReference = options.useExistingReference;
+        let useExistingReference = options.useExistingReference;    // If we are trying to create another instance of the API, this tells us to return the original instance instead of creating a new one
+        if(options.allowMultipleInstances) allowMultipleInstances = true; // Potentially hazardous:  Allows multiple instances of the API to run at the same time.
         let initFunction = options.init;
         SmartModule.rootPath = options.rootPath || SmartModule.rootPath;
         SmartModule.moduleDirectory = options.moduleDirectory || "modules";
@@ -35,10 +40,20 @@ const SmartModule = (function() {
         if(SmartModule.rootPath.charAt(SmartModule.rootPath.length-1) != "/")  SmartModule.rootPath += "/";
         SmartModule.moduleAbsolutePath = SmartModule.rootPath + SmartModule.moduleDirectory;
 
+        // Allows accessing the active smart module session from any module as an alternative to the "moduleName.root" variable.  
+        // Note that this variable will break if you allow multiple instances of the API to be running simultaneously! 
+        SmartModule.activeInstance = this;   
+        
+        // Load any modules that are being requested with the "include" argument
+        if(options.modules) {
+            SmartModule.loadModule(options.modules);
+        }
+
+
         // useExistingReference tells us to return an already existing reference to this API if it exists
-        instances++;
-        if(instances > 1 && !allowMultipleInstances) {
+        if(SmartModule.instances > 1 && !allowMultipleInstances) {
             if(!useExistingReference) console.warn(`Attempted to create multiple SmartModule API instances.  Multiple instances are currently disabled.`);
+            SmartModule.instances = 1;  // We are passing the original instance back instead of creating a new one, so keep instances at 1
             instances = 1;
             return activeInstance;
         }
@@ -47,7 +62,6 @@ const SmartModule = (function() {
         this.blankSection = "";
         this.blankSection = ""; // Defines a blank cross section variable to be used for the "New" menu item
         this.version = version;
-        this.instances = instances;
         this.description = `Smart Modules v${this.version} loaded`;
         this.modulesLoaded = [];
         this.state = SmartModule.STATE_IDLE;        // States allow us to know what the smart module is currently doing, such as waiting on async functions to complete
@@ -173,7 +187,7 @@ const SmartModule = (function() {
         }
     }
     
-    if(instances > 0 && !allowMultipleInstances) {
+    if(instances > 1 && !allowMultipleInstances) {
         return activeInstance;
     } else {
         return smartModule;
