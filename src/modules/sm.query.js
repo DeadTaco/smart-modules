@@ -13,9 +13,10 @@ SmartModule.addModule("$", function(querySelector) {
         let self = this;
         this.first = node[0];
         this.last = node[node.length-1];
-        this.nodes = node,
+        this.nodes = node;
+        let nodeArray = Array.from(node);
         this.description = ["query", "Tools for document element queries"];
-        this.version = "1.0",
+        this.version = "1.0";
         // Hide an element
         this.hide = function() { 
             Array.from(node).map(e => {
@@ -42,6 +43,29 @@ SmartModule.addModule("$", function(querySelector) {
                 e.addEventListener(evt, fn);
             });
         }
+        this.hasClass = function(className) {
+            return node[0].classList.contains(className);
+        }
+        this.toggleClass = function(className) {
+            nodeArray.map(n=>{
+                if(n.classList.contains(className)) {
+                    n.classList.remove(className);
+                } else {
+                    n.classList.add(className);
+                }
+            });
+        }
+        this.removeClass = function(className) {
+            nodeArray.map(n=>{
+                n.classList.remove(className);
+            });
+        }
+        this.addClass = function(className) {
+            nodeArray.map(n=>{
+                n.classList.add(className);
+            });
+        }                   
+
         // Set a DOM element value
         this.val = function(setValueTo) {
             if(setValueTo) {

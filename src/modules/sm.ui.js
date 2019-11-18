@@ -4,6 +4,24 @@ SmartModule.addModule("ui", (
         description : ["sm.ui.js", "User interface: Dynamic HTML, text popups, and user interface objects"],
         requires : ["fileio"],
         version : "1.0",
+        
+        // Adds a tooltip to a DOM element/node for mouseover events
+        addTooltip : function(element, tooltip) {
+            tooltip = tooltip || element.getAttribute("tooltip");
+            element.addEventListener('mouseenter', e=>{
+                this.showTooltip(e);
+            });
+            element.addEventListener('mouseleave', e=>{
+                this.hideTooltip();
+            });            
+        },
+        showTooltip : function(element) {
+            console.log("Show a tooltip for this element", element);
+        },
+        hideTooltip : function() {
+            console.log("Hide a tooltip for this element.");
+        },        
+
         // Loads a template html file and appends it to the dialog variable "template".  This returns a promise, so you can use the ().then operator for async operations
         loadTemplate : function(templateName) {
             let root = this.root;

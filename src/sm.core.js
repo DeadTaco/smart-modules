@@ -1,5 +1,6 @@
 /* --------------------------------------------------------------------------------------------------------------------------------
 sm.core.js
+Version 0.1 Alpha
 Smart Modules - Core functionality
 
 Written By Devin Crowley
@@ -14,7 +15,7 @@ const SmartModule = (function() {
     let collapseLoader = false; // Collapses the loaded modules into a single line in the console - Set to false for debugging issues
     let instances = 0;          // PRIVATE -- Tell us if smartModule is already instantiated
     let activeInstance = null;  // If we only a allow a single instance of this library and an instance already exists, return it instead of creating a new instance
-    let version = "1.0.0" ;
+    let version = "0.0.1a" ;
     
     // The root functionality of the smartModule object - Please note the uppercase vs lowercase names for the API vs the loader
     function smartModule(options) {
@@ -48,7 +49,6 @@ const SmartModule = (function() {
         if(options.modules) {
             SmartModule.loadModule(options.modules);
         }
-
 
         // useExistingReference tells us to return an already existing reference to this API if it exists
         if(SmartModule.instances > 1 && !allowMultipleInstances) {
@@ -161,8 +161,10 @@ const SmartModule = (function() {
         // of which modules are loaded first.  Description is optional and may be passed in the 'fn' arg instead.
         // If appendToModule is true, this module will extend an existing module and add functionality to it
         function addModule(mod, fn, modInfo, appendToModule = false) {
+            
             modInfo = modInfo || {};
             let description = modInfo.description || false;
+            
             let requirements = modInfo.requires;
             if(!appendToModule) {
                 if(smartModule.prototype[mod]) throw new Error(`Warning!  A module with the name ${mod} already exists!  `);
