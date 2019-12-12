@@ -204,7 +204,8 @@ const SmartModule = (function() {
             }            
         }
     }
-    
+
+    // Completed, pass back the smart module instance
     if(instances > 1 && !allowMultipleInstances) {
         return activeInstance;
     } else {
@@ -255,6 +256,13 @@ SmartModule.rootPath = (()=> {
     return mydir;
 })();
 
+// Load required styles for modal dialogs and other smart module related HTML
+// Get the path to the sm.core.js file so we can find its relative CSS file
+let link = document.createElement("link");
+link.rel = "stylesheet";
+link.href=SmartModule.rootPath + "css/style.css";
+document.querySelector("head").append(link);
+
 // Absolute path to modules:  This can be changed by the user with an option during the initialization of the API
 SmartModule.moduleAbsolutePath = SmartModule.rootPath + "modules/";
 
@@ -277,7 +285,7 @@ SmartModule.loadModule = function(moduleName) {
 
 // File reading and writing
 SmartModule.addModule("fileio", ({
-        description : ["fileio", "File Controller: input and output (Built-in module)"],
+        description : ["fileio", "[Native Module] File Controller: input and output"],
         version : "1.0",
         // Retrieves a file, then runs the function assigned to fn
         getFile : function(path, fn) {
@@ -304,6 +312,46 @@ SmartModule.addModule("fileio", ({
     })
 );
 
+// Animate any value over the given time with a simple animation controller
+SmartModule.addModule("animate", ({
+        description : ["animate", "[Native Module] Animation Controller: Sets the value any given variable over time"],
+        version : "1.0",
+        // Retrieves a file, then runs the function assigned to fn
+        run(options = {}) {
+            // options: sourceElement, sourceVariable, from, to, easing, type, tick, appendString
+            // Easing is not yet implemented but will be soon!
+            let appendString = options.appendString || 0;
+            let totalTime = options.time;
+            let timeStart = Date.now();
+            let timeNow = Date.now();
+            let stop = false;
+            let variable;
+            function Animate() {
+                self = this;
+                runFrame();
+                function runFrame() {
+                    timeNow = Date.now();
+                    let lerp = (timeNow - timeStart) / totalTime;   // Figure out what percentage of the animation is completed
+                    self.percentComplete = lerp;
+                    if(lerp > 1) stop = true;                       // 100% animation completed
+                    variable = (options.from + ((options.to - options.from) * lerp)) + appendString;
+                    if(options.tick) options.onFrame(tick);
+                    if(!stop) {
+                        requestAnimationFrame(runFrame);
+                    } else {
+                        variable = options.to;
+                    }
+                    if(options.sourceElement) {
+                        options.sourceElement[options.sourceVariable] = variable;
+                    } else {
+                        sourceVariable = variable;
+                    }        
+                }
+            }
+            return new Animate();
+        }
+    })
+);
 
 
 

@@ -1,0 +1,77 @@
+.sm-dialog {
+  padding: 0px;
+  box-sizing: border-box;
+  background-color: white;
+  border: 1px solid black;
+  font-size: 0.85em;
+}
+
+.sm-dialog .title {
+  background-color: #3278ff;
+  color: white;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.sm-dialog .content {
+  background-color: #f0f0f0;
+  color: black;
+  padding: 5px;
+}
+
+.sm-dialog .footer {
+  background-color: #d9e6ff;
+  border-top: #3278ff;
+  color: black;
+  padding: 5px;
+  text-align: right;
+}
+
+.sm-dialog .closedialog {
+  float: right;
+  padding: 5px;
+  margin: -6px -5px -5px -5px;
+  user-select: none;
+}
+
+.sm-dialog .closedialog:hover {
+  background-color: #000064;
+}
+
+.sm-button {
+  color: white;
+  background-color: #3264ff;
+  font-size: 1.2em;
+  padding: 5px 8px 5px 8px;
+  margin: 4px;
+  border: 0px;
+  cursor: pointer;
+  color: white;
+  transition: color 0.25s ease, background-color 0.25s ease;
+}
+
+.sm-button.btn-success {
+  background-color: #00c800;
+}
+
+.sm-button:hover {
+  background-color: #ffffc8;
+  color: black;
+}
+
+.sm-row {
+  display: flex;
+  align-content: center;
+}
+
+.sm-label {
+  padding: 3px;
+  margin-right: 10px;
+}
+
+.sm-input {
+  width: 100%;
+  background-color: #d9e6ff;
+  border: 1px solid #3278ff;
+  padding: 3px;
+}

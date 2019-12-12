@@ -54,16 +54,19 @@ SmartModule.addModule("$", function(querySelector) {
                     n.classList.add(className);
                 }
             });
+            return new $($root, node);
         }
         this.removeClass = function(className) {
             nodeArray.map(n=>{
                 n.classList.remove(className);
             });
+            return new $($root, node);
         }
         this.addClass = function(className) {
             nodeArray.map(n=>{
                 n.classList.add(className);
             });
+            return new $($root, node);
         }                   
 
         // Set a DOM element value
@@ -75,9 +78,50 @@ SmartModule.addModule("$", function(querySelector) {
             } else {
                 return node[0].value;
             }
+            return new $($root, node);
         }
+        // Set a DOM attribute value
+        this.attr = function(attr, val) {
+            if(val !== undefined) {
+                Array.from(node).map(e => {
+                    e.setAttribute(attr, val);
+                });                
+            } else {
+                return node[0].attributes[attr];
+            }
+            return new $($root, node);
+        }        
+        this.width = function(setValueTo) {
+            if(setValueTo) {
+                Array.from(node).map(e => {
+                    if(Number(setValueTo).toString() == "NaN") {
+                        e.style.width = setValueTo;
+                    } else {
+                        e.style.width = setValueTo  + "px";
+                    }
+                });                
+            } else {
+                return node[0].clientWidth;
+            }
+            return new $($root, node);
+        } 
+        this.height = function(setValueTo) {
+            if(setValueTo) {
+                Array.from(node).map(e => {
+                    if(Number(setValueTo).toString() == "NaN") {
+                        e.style.height = setValueTo;
+                    } else {
+                        e.style.height = setValueTo  + "px";
+                    }
+                });                
+            } else {
+                return node[0].clientHeight;
+            }
+            return new $($root, node);
+        }               
         this.append = function(doc) {
             node[0].append(doc);
+            return new $($root, node);
         }
         // Appends html from a remote URL
         this.appendHtmlFromUrl = function(path) {
@@ -88,7 +132,8 @@ SmartModule.addModule("$", function(querySelector) {
               }
             };
             xhttp.open("GET", path, true);
-            xhttp.send();            
+            xhttp.send();
+            return new $($root, node);       
         }
         this.link = function(keyName, setterFunction) {
             
