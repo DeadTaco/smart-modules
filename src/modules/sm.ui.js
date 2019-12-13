@@ -265,7 +265,6 @@ SmartModule.addModule("ui", (
             });   
             */         
             let title = options.title || "Title";
-            let buttons = options.buttons;
             let html = options.html || "Empty";
             let width = options.width || 300;
             let height = options.height || 300;
@@ -298,8 +297,8 @@ SmartModule.addModule("ui", (
             this.makeModal(dBox, dBox.querySelector(".title"), document.body);  // Make this a floating, draggable modal dialog
             
             // Apply HTML content from options
-            dBox.querySelector(".title_text").innerHTML = options.title;
-            dBox.querySelector(".content").innerHTML = options.html;
+            dBox.querySelector(".title_text").innerHTML = title;
+            dBox.querySelector(".content").innerHTML = html;
 
             // Dialog X button event
             dBox.querySelector(".closedialog").onclick = function(){ newDialogBox.remove(); }
@@ -359,7 +358,7 @@ SmartModule.addModule("ui", (
                     dBox.classList.add(cls);
                 });
             }
-            // Dialog Boxes are their own object and have their own internal methods
+            // Dialog Boxes are their own object and have their own internal methods.  Dialog() is used as a class object
             function Dialog(box) {
                 let self = this;
                 this.node = box;

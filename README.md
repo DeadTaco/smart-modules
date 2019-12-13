@@ -1,6 +1,6 @@
 # The Smart Modules API
 
-***API Version 0.0.1a -- Documentation version 1.1***
+***API Version 0.0.2a -- Documentation version 1.1***
 
 The Smart Module API is currently in development and is a small ES6+ Javascript framework for wrapping modules into a single Javascript object.  Each module has access to other modules that are loaded, as well as any variables within the API itself.
 

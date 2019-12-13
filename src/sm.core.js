@@ -15,7 +15,7 @@ const SmartModule = (function() {
     let collapseLoader = false; // Collapses the loaded modules into a single line in the console - Set to false for debugging issues
     let instances = 0;          // PRIVATE -- Tell us if smartModule is already instantiated
     let activeInstance = null;  // If we only a allow a single instance of this library and an instance already exists, return it instead of creating a new instance
-    let version = "0.0.1a" ;
+    let version = "0.0.2a" ;
     
     // The root functionality of the smartModule object - Please note the uppercase vs lowercase names for the API vs the loader
     function smartModule(options) {

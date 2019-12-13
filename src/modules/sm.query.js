@@ -3,97 +3,140 @@
 // This single-function module is accessed with "$" but is loaded from "sm.query.js"
 
 SmartModule.addModule("$", function(querySelector) {
-    let thisNode = null;
-    if(typeof querySelector == "string") {
-        thisNode = document.querySelectorAll(querySelector);
-    } else  {
-        thisNode = querySelector;
-    }
-    function $($root, node){
-        let self = this;
-        this.first = node[0];
-        this.last = node[node.length-1];
-        this.nodes = node;
-        let nodeArray = Array.from(node);
+    function sm$(selector){
         this.description = ["query", "Tools for document element queries"];
-        this.version = "1.0";
+        this.version = "1.0";        
+        this.selector = selector;
+        this.element = null;
+        let self = this;
+        this.nodes = [];
+        
+        // Initialization - If no element exists, create it.
+        this.init = function() {
+            // Check for an opening html tag.  If one exists, we are creating an element.
+            if(!this.selector) return false;
+            switch (this.selector[0]) {
+                case '<':
+                  var matches = this.selector.match(/<([\w-]*)>/);
+                  if (matches === null || matches === undefined) {
+                    throw 'Invalid Selector or Node';
+                  }
+                  var nodeName = matches[0].replace('<', '').replace('>', '');
+                  // Adding the new element to a document fragment, in case we want to add a large chunk of HTML with many elements
+                  let frag = document.createDocumentFragment();
+                  let fragBody = document.createElement("div");
+                  frag.append(fragBody);
+                  fragBody.innerHTML = this.selector;
+                  this.nodes = Array.from(fragBody.childNodes); // Each element from the HTML blob is placed into the nodes array
+                  this.last = this.nodes[0];
+                  this.first = this.nodes[0];
+                  this[0] = this.nodes[0];
+                  return this;
+                default:
+                  this.element = document.querySelectorAll(this.selector); // Element is an array of returned elements from the query
+                  this.first = this.element[0]
+                  this.nodes = Array.from(this.element);
+                  for(let i = 0; i < this.nodes.length; i++) { this[i] = this.nodes[i]; }
+                  this.last = this.nodes[this.nodes.length-1];
+                  return this.nodes;
+              }
+        }
         // Hide an element
         this.hide = function() { 
-            Array.from(node).map(e => {
-                if(e.style.display != "none") e.defStyle = e.style.display;
-                e.style.display="none";
+            self.nodes.map(e => {
+                if(e.defStyle) { e.style.display = e.defStyle } else { e.style.display="none"; }                
             });
-            return new $($root, node);
+            return self;
         }
-        // Show and element
+        // Show an element
         this.show = function() { 
-            Array.from(node).map(e => {
-                if(e.defStyle) { e.style.display = e.defStyle } else { e.style.display="inline"; }
+            self.nodes.map(e => {
+                if(e.defStyle) { e.style.display = e.defStyle } else { e.style.display="inline"; }                
             });
-            return new $($root, node);
+            return self;
+        }
+        // Set the element's inner HTML
+        this.html = function(html) {
+            if(html) {
+                self.nodes.map(e => {
+                    e.innerHTML = html;               
+                });
+                return self;
+            } else {
+                return e.innerHTML;
+            }
         }
         // Run a function on each returned element
         this.each = function(fn) { 
-            Array.from(node).map(e => { fn(e); });
-            return new $($root, node);
+            self.nodes.map(e => { fn(e); });
+            return self;
         }
         // Add an event to an element
         this.on = function(evt, fn) {
-            Array.from(node).map(e => {
+            self.nodes.map(e => {
                 e.addEventListener(evt, fn);
             });
         }
         this.hasClass = function(className) {
-            return node[0].classList.contains(className);
+            return self.first.classList.contains(className);
         }
-        this.toggleClass = function(className) {
-            nodeArray.map(n=>{
-                if(n.classList.contains(className)) {
-                    n.classList.remove(className);
-                } else {
-                    n.classList.add(className);
-                }
+        // Toggle, add, and remove classes from the element.  Multiple classes can be passed, separated with spaces
+        this.toggleClass = function(classNames) {
+            className = classNames.split(" ");
+            className.map(c => {
+                self.nodes.map(n=>{
+                    if(n.classList.contains(c)) {
+                        n.classList.remove(c);
+                    } else {
+                        n.classList.add(c);
+                    }
+                });
             });
-            return new $($root, node);
+            return self;
         }
-        this.removeClass = function(className) {
-            nodeArray.map(n=>{
-                n.classList.remove(className);
+        this.removeClass = function(classNames) {
+            className = classNames.split(" ");
+            className.map(c => {
+                self.nodes.map(n=>{
+                    n.classList.remove(c);
+                });
             });
-            return new $($root, node);
+            return self;
         }
-        this.addClass = function(className) {
-            nodeArray.map(n=>{
-                n.classList.add(className);
+        this.addClass = function(classNames) {
+            className = classNames.split(" ");
+            className.map(c => {
+                self.nodes.map(n=>{
+                    n.classList.add(c);
+                });
             });
-            return new $($root, node);
-        }                   
-
+            return self;
+        }
         // Set a DOM element value
         this.val = function(setValueTo) {
             if(setValueTo) {
-                Array.from(node).map(e => {
+                self.nodes.map(e => {
                     e.value = setValueTo;
                 });                
             } else {
-                return node[0].value;
+                return self.first.value;
             }
-            return new $($root, node);
+            return self;
         }
         // Set a DOM attribute value
         this.attr = function(attr, val) {
             if(val !== undefined) {
-                Array.from(node).map(e => {
+                self.nodes.map(e => {
                     e.setAttribute(attr, val);
                 });                
             } else {
-                return node[0].attributes[attr];
+                return self.first.attributes[attr];
             }
-            return new $($root, node);
+            return self;
         }        
         this.width = function(setValueTo) {
             if(setValueTo) {
-                Array.from(node).map(e => {
+                self.nodes.map(e => {
                     if(Number(setValueTo).toString() == "NaN") {
                         e.style.width = setValueTo;
                     } else {
@@ -101,13 +144,13 @@ SmartModule.addModule("$", function(querySelector) {
                     }
                 });                
             } else {
-                return node[0].clientWidth;
+                return self.first.clientWidth;
             }
-            return new $($root, node);
+            return self;
         } 
         this.height = function(setValueTo) {
             if(setValueTo) {
-                Array.from(node).map(e => {
+                self.nodes.map(e => {
                     if(Number(setValueTo).toString() == "NaN") {
                         e.style.height = setValueTo;
                     } else {
@@ -115,25 +158,32 @@ SmartModule.addModule("$", function(querySelector) {
                     }
                 });                
             } else {
-                return node[0].clientHeight;
+                return self.first.clientHeight;
             }
-            return new $($root, node);
-        }               
-        this.append = function(doc) {
-            node[0].append(doc);
-            return new $($root, node);
+            return self;
+        } 
+        // Appends HTML or another sm.$ query object to the given element              
+        this.append = function(elem) {
+            if(elem.constructor.name == "sm$") {
+                elem.nodes.map(n=>{
+                    self.first.append(n);
+                });
+            } else {
+                self.first.append(elem);
+            }
+            return self;
         }
         // Appends html from a remote URL
         this.appendHtmlFromUrl = function(path) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
               if (this.readyState == 4 && this.status == 200) {
-               node[0].innerHTML = this.responseText;
+               this.first.innerHTML = this.responseText;
               }
             };
             xhttp.open("GET", path, true);
             xhttp.send();
-            return new $($root, node);       
+            return self;       
         }
         this.link = function(keyName, setterFunction) {
             
@@ -149,7 +199,7 @@ SmartModule.addModule("$", function(querySelector) {
             $root.linkedEvent = $root.linkedEvent || {};    // A list of all DOM elements which are linked to variables in some way.  For event tracking.
             let fn = setterFunction;
             let val = keyName;
-            let domNode = node[0];
+            let domNode = self.first;
             if(typeof $root.links[val] != "undefined") {
                 throw `Cannot redefine the linked variable named "${val}"!  Unlink the variable first.`;
             }
@@ -186,8 +236,10 @@ SmartModule.addModule("$", function(querySelector) {
             delete $root.links[val];
             delete $root.linkedEvent[domNode];
         }
+        return this;
     };
-    let $root = this;
-    return new $($root, thisNode);
+    let elem = new sm$(querySelector);
+    elem.init();
+    return elem;
 },{ description : ["query", "Tools for document queries, accessed via '$'"], requires : null, version : "1.0" });
 
