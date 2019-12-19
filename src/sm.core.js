@@ -59,7 +59,6 @@ const SmartModule = (function() {
         }
         activeInstance = this;
         const $root = this;
-        this.blankSection = "";
         this.blankSection = ""; // Defines a blank cross section variable to be used for the "New" menu item
         this.version = version;
         this.description = `Smart Modules v${this.version} loaded`;
@@ -288,11 +287,12 @@ SmartModule.addModule("fileio", ({
         description : ["fileio", "[Native Module] File Controller: input and output"],
         version : "1.0",
         // Retrieves a file, then runs the function assigned to fn
-        getFile : function(path, fn) {
+        getFile : function(path, fn, noCache = false) {
             this.root.currentState = SmartModule.STATE_LOADFILE; // APP STATES
             this.root.activeAsync++;    // Let's us know we have an active async/promise running
             let $this = this;
-            path = path + "?nocache=1";
+            // Prevent loading a cached version of the requested file/path
+            if(noCache) path = path + "?nocache=1";
             let promise = new Promise((resolve, reject) => {
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {

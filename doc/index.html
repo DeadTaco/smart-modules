@@ -1,312 +1,110 @@
-<!DOCTYPE html><html><head>
-      <title>README</title>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      
-      <!-- <link rel="stylesheet" href="file:///c:\Users\dcrowley\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.5.0\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css"> -->
-      <link rel="stylesheet" href="css/style.css">
-      <style>
-      </style>
+<html lang="en" xml:lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta lang="en">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="js/styles/default.css">
+        <script src="../src/sm.core.js"></script>
+        <script src="js/highlight.pack.js"></script>
     </head>
-    <body for="html-export">
-      <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="the-smart-modules-api">The Smart Modules API</h1>
+    <body class="main">
+        <div class="container">
+            <nav>
+                <group>
+                    <h1>Modules</h1>
+                    <div class="modulegroup">
+                        <h2><a href="#" target="ui.module.html" title="User Interface Module" class="">ui</a></h2>
+                        <div class="subtitle">sm.ui.js</div>
+                        <a href="#" target="ui.createdialog.html" title="Create Dialog" class="function">createDialog</a>
+                        <a href="#" target="ui.tooltips.html#addToolTip" title="Add Tooltip" class="function">addToolTip</a>
+                        <a href="#" target="ui.tooltips.html#hideToolTip" title="Hide Tooltip" class="function">hideToolTip</a>
+                        <a href="#" target="ui.tooltips.html#showToolTip" title="Show Tooltip" class="function">showToolTip</a>
+                        <a href="#" target="pending.html#loadTemplate" title="Load a Template" class="function">loadTemplate</a>
+                        <a href="#" target="pending.html#htmlFromTemplate" title="Get HTML from Template" class="function">htmlFromTemplate</a>
+                    </div>
+                    <div class="modulegroup">
+                        <h2><a href="#" target="pending.html" title="Query module" class="">query / $</a></h2>
+                        <div class="subtitle">sm.query.js</div>
+                        <a href="#" target="pending.html#show" title="" class="function">show</a>
+                        <a href="#" target="pending.html#hide" title="" class="function">hide</a>
+                        <a href="#" target="pending.html#html" title="" class="function">html</a>
+                        <a href="#" target="pending.html#each" title="" class="function">each</a>
+                        <a href="#" target="pending.html#on" title="" class="function">on</a>
+                        <a href="#" target="pending.html#hasClass" title="" class="function">hasClass</a>
+                        <a href="#" target="pending.html#toggleClass" title="" class="function">toggleClass</a>
+                        <a href="#" target="pending.html#removeClass" title="" class="function">removeClass</a>
+                        <a href="#" target="pending.html#addClass" title="" class="function">addClass</a>
+                        <a href="#" target="pending.html#val" title="" class="function">val</a>
+                        <a href="#" target="pending.html#attr" title="" class="function">attr</a>
+                        <a href="#" target="pending.html#width" title="" class="function">width</a>
+                        <a href="#" target="pending.html#height" title="" class="function">height</a>
+                        <a href="#" target="pending.html#append" title="" class="function">append</a>
+                        <a href="#" target="pending.html#appendHtmlFromUrl" title="" class="function">appendHtmlFromUrl</a>
+                        <a href="#" target="pending.html#link" title="" class="function">link</a>
+                        <a href="#" target="pending.html#unlink" title="" class="function">unlink</a>
+                    </div>
+                    <div class="modulegroup">
+                        <h2><a href="#" target="pending.html" title="Math module" class="">math</a></h2>
+                        <div class="subtitle">sm.math.js</div>                        
+                        <a href="#" target="pending.html#" title="" class="function">abs</a>
+                        <a href="#" target="pending.html#" title="" class="function">rnd</a>
+                        <a href="#" target="pending.html#" title="" class="function">rndRange</a>
+                        <a href="#" target="pending.html#" title="" class="function">rndRangeInt</a>
+                        <a href="#" target="pending.html#" title="" class="function">rndInt</a>
+                        <a href="#" target="pending.html#" title="" class="function">round</a>
+                        <a href="#" target="pending.html#" title="" class="function">degToRad</a>
+                        <a href="#" target="pending.html#" title="" class="function">pad</a>
+                    </div>
+                    <div class="modulegroup">
+                        <h2><a href="#" target="pending.html" title="Menu module" class="">menu</a></h2>
+                        <div class="subtitle">sm.menu.js</div>                        
+                        <a href="#" target="pending.html#" title="" class="function">createMenu</a>
+                        <a href="#" target="pending.html#" title="" class="function">showMenuItem</a>
+                        <a href="#" target="pending.html#" title="" class="function">hideMenuItem</a>
+                        <a href="#" target="pending.html#" title="" class="function">removeMenuItem</a>
+                        <a href="#" target="pending.html#" title="" class="function">addMenuItem</a>
+                        <a href="#" target="pending.html#" title="" class="function">lockMenuItem</a>
+                        <a href="#" target="pending.html#" title="" class="function">unlockMenuItem</a>
+                        <a href="#" target="pending.html#" title="" class="function">isVisible</a>
+                    </div>                                               
+                </group>
+            </nav>
+            <div id="content_loader" class="content">
+                <!-- <h1>Smart Modules API</h1>
+                Version 0.0.2a<br>
+                Documentation Revision 1.1a -->
+                <iframe id="document" src="modules/main.html"></iframe>
+            </div>
+        </div>
+    </body>
+</html>
 
-<ul>
-<li><a href="#the-smart-modules-api">The Smart Modules API</a>
-<ul>
-<li><a href="#getting-started">Getting Started</a>
-<ul>
-<li><a href="#using-the-smart-modules-loader">Using the Smart Modules loader</a></li>
-<li><a href="#creating-and-defining-modules">Creating and Defining Modules</a>
-<ul>
-<li><a href="#defining-modules-before-creating-a-new-smart-module-instance">Defining modules before creating a new smart module instance</a></li>
-<li><a href="#defining-modules-after-the-api-has-already-been-initalized-with-the-new-operator-module-quothot-loadingquot">Defining modules after the API has already been initalized with the new operator (module &quot;Hot-Loading&quot;)</a></li>
-<li><a href="#accessing-other-modules-and-their-variablesfunctions-from-your-collection">Accessing other modules and their variables/functions from your collection</a></li>
-<li><a href="#creating-a-single-function-or-single-value-module">Creating a single function or single value module</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#core-and-included-modules">Core and Included Modules</a>
-<ul>
-<li><a href="#fileio-built-in">fileio &#xA0; (built-in)</a></li>
-<li><a href="#ui-smuijs">ui &#xA0; (sm.ui.js)</a></li>
-<li><a href="#smqueryjs">$ &#xA0; (sm.query.js)</a></li>
-</ul>
-</li>
-<li><a href="#using-templates-and-template-files">Using Templates and Template Files</a>
-<ul>
-<li><a href="#loading-template-files">Loading template files</a></li>
-<li><a href="#dot-values-in-a-template">Dot values in a template</a></li>
-</ul>
-</li>
-<li><a href="#states">States</a></li>
-<li><a href="#examples">Examples</a></li>
-</ul>
-</li>
-</ul>
-<p><em><strong>API Version 0.0.2a -- Documentation version 1.1</strong></em></p>
-<p>The Smart Module API is currently in development and is a small ES6+ Javascript framework for wrapping modules into a single Javascript object.  Each module has access to other modules that are loaded, as well as any variables within the API itself.</p>
-<h2 class="mume-header" id="getting-started">Getting Started</h2>
+<script>
+    hljs.initHighlightingOnLoad(); // Code highlighting - 3rd party utilizing highlight.js
+    const sm = new SmartModule({
+        init: ()=> {
+            init();     // Run a function after initialization of the smart module API
+        },
+        showModuleInfo: true,   // Show info for loaded modules in the console,
+        modules: ["ui", "query", "math", "eventmapper"]
+    });
 
-<p>You will need to have the sm.core.js script loaded into your page.  It controls the loading of all other modules.<br>
-To load modules, you can add their script to your page with a script source tag, or by using the Smart Module loader.</p>
-<p>Initialize the smart module API with the <code>new</code> syntax.  There are some optional parameters that may be passed to the API, as seen here:</p>
-<pre data-role="codeBlock" data-info="JAVASCRIPT" class="language-javascript"><span class="token keyword">const</span> sm <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SmartModule</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-    <span class="token function-variable function">init</span><span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-        <span class="token function">doThings</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// Run a function after initialization</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    showModuleInfo<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>   <span class="token comment">// Show info for loaded modules in the console,</span>
-    modules<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;ui&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;query&quot;</span><span class="token punctuation">]</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</pre><ul>
-<li><code>init</code> : <em>fn</em> -- will run the given function after the API is fully initialized</li>
-<li><code>showModuleInfo</code> : <em>bool</em> -- If true, this will show the loaded modules and their information in the browser console for debugging purposes</li>
-<li><code>modules</code> : <em>array</em> -- An array of modules to load during the initialization phase.  You can include a full path to the module filename or just the module name itself.  See <em>Using the Smart Modules Loader</em> section below.</li>
-<li><code>moduleDirectory</code> -- <em>Default is &quot;modules&quot;</em> -- Sets the directory name of your modules directory if it is different from the default <code>./modules</code> location</li>
-<li><code>rootPath</code> -- <em>Default is the absolute path to sm.core.js</em> - Sets the path to check for resources such as templates and modules.  If <code>moduleDirectory</code> isn&apos;t set by the user, the path to modules will be <code>rootPath/modules</code>.  Note that the <code>rootPath</code> variable automatically adds a slash to the end if one wasn&apos;t included.</li>
-<li><code>allowMultipleInstances</code> <em>bool</em> -- <em>Default is false</em> -- Allows multiple instances of the API to run simultaneously.  It&apos;s strongly recommended that you <strong>do not</strong> allow multiple instances as some modules may rely on having only a single instance available.  This forcefully allows it.</li>
-</ul>
-<p>A variable named <code>SmartModule.moduleAbsolutePath</code> will be generated once the API has been initialized.  This will give you the absolute path to the modules directory should you need it.</p>
-<hr>
-<h3 class="mume-header" id="using-the-smart-modules-loader">Using the Smart Modules loader</h3>
+    function init() {
+        sm.events.add("a", "click", evt=>{
+            evt.preventDefault();
+            let target = evt.target.attributes["target"].value
+            loadTemplate(target);
+        });
+        sm.$("#document").first.onload = function(){
+            // Future event handler for successful iframe dynamic load
+        }        
+    }
 
-<p>You will need a <code>modules</code> directory placed in the same location as the sm.core.js file unless you want to manually assign a path to your modules.  All of your modules should be placed into that directory if you want to use the modules loader by providing only a module name.</p>
-<p>It&apos;s not mandatory for modules to be located in the modules directory, but makes it easier to organize the modules.</p>
-<p>To load a module, you will need to use the modules option in the <code>new SmartModule({</code><em><code>config options</code></em><code>})</code> function.  The Smart Module will check the modules directory for a file titled <code>sm.modulename.js</code> where modulename is the module name.  Be sure the provided module name is titled the same as the filename between sm. and .js</p>
-<p>Alternatively, you can add your module before initialization with the following syntax:</p>
-<pre data-role="codeBlock" data-info="JAVASCRIPT" class="language-javascript">SmartModule<span class="token punctuation">.</span><span class="token function">loadModule</span><span class="token punctuation">(</span><span class="token string">&quot;mymodule&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Loads modules/sm.mymodule.js</span>
-</pre><p><em>Optionally</em>, a full path can be provided to the module file you wish to load.  For example:</p>
-<pre data-role="codeBlock" data-info="JAVASCRIPT" class="language-javascript">SmartModule<span class="token punctuation">.</span><span class="token function">loadModule</span><span class="token punctuation">(</span><span class="token string">&quot;https://somedomain.com/sm.modulename.js&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</pre><p>The SmartModule API has a variable available for you named <code>SmartModule.rootPath</code> to get the absolute path to the sm.core.js file.  This can be used to place your modules into your own custom directory located relative to the sm.core.js file.  Please note that if you loaded the sm.core.js file through an ajax or dynamic load script call, the <code>SmartModule.rootPath</code> variable may be incorrect.  This will also affect loading modules without providing a full path to the module file as the <code>SmartModule.rootPath</code> is used to locate the modules directory.</p>
-<p><em>Note: For debugging, during development time it may be preferable to load your module with a <code>&lt;script&gt;</code> tag. Errors may not show which line they occurred on in a dynamically loaded script</em>\</p>
-<hr>
-<h3>Creating and Defining Modules</h3>
-<h4>Defining modules <em>before</em> creating a new smart module instance</h4>
-<p>It is best practice to load or define all modules <em>before initializing the API with the <code>new</code> operator</em>.  This allows all modules to run dependency checks prior to loading.  Hot-loading modules after initialization is allowed, however.<br>
-<em>Note that <code>addModule</code> defines a module whereas <code>loadModule</code> loads a module from a file/URL.  The module name defined with <code>addModule</code> does not need to match its filename</em></p>
-<p>The following steps are for creating new modules <em>only</em> if you have not yet added an instance of the Smart Module API to your project with the <code>new</code> operator.  To define a new module, use</p>
-<pre data-role="codeBlock" data-info="javascript" class="language-javascript">SmartModule<span class="token punctuation">.</span><span class="token function">addModule</span><span class="token punctuation">(</span> moduleName<span class="token punctuation">,</span> moduleFunction<span class="token punctuation">,</span> moduleInfo<span class="token punctuation">,</span> appendToModule<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</pre><ul>
-<li><code>moduleName</code> <em>string</em> : is the object name that will be used to access the module.  For example, assuming <code>sm</code> is the variable name given to your instance of the SmartModule and <code>moduleName</code> is &quot;mymodule&quot;, then you would access it and its functions with <code>sm.mymodule</code></li>
-<li><code>moduleFunction</code> <em>function</em> : defines the object that handles the functionality of the module.  It can be a single function, a <em>collection</em> of functions and items (a javascript object), a string, a number, etc.</li>
-<li><code>moduleInfo</code> <em>object</em> : is an optional <code>key : value</code> object that you can pass to the function that describes your module.
-<ul>
-<li>
-<p>The parameters that may be passed are as follows:</p>
-<pre data-role="codeBlock" data-info="JAVASCRIPT" class="language-javascript">    <span class="token punctuation">{</span>
-        description <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;module name&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;A description of my module&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        requires <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;fileio&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;ui&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;anothermodule&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        version <span class="token punctuation">:</span> <span class="token string">&quot;1.0&quot;</span>
-    <span class="token punctuation">}</span>
-</pre></li>
-<li>
-<p>An explanation of these variables is found in the next section.  If you are using a <em>collection</em> object you can define these from inside the object instead as seen in the next section as well._**</p>
-</li>
-</ul>
-</li>
-<li><code>appendToModule</code> <em>boolean</em> : Appends this functionality to an existing module if the given <code>moduleName</code> already exists</li>
-</ul>
-<p>Modules are typically collections of functions, variables, and objects, but they can also be a single function or other element.<br>
-To define a <em>collection</em>, the syntax is fairly basic:</p>
-<pre data-role="codeBlock" data-info="JAVASCRIPT" class="language-javascript">SmartModule<span class="token punctuation">.</span><span class="token function">addModule</span><span class="token punctuation">(</span><span class="token string">&quot;mymodule&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
-       description <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;My Module&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;This is my custom smart module!&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-       requires <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;fileio&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;dialog&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-       version <span class="token punctuation">:</span> <span class="token string">&quot;1.0&quot;</span><span class="token punctuation">,</span>
-       <span class="token function-variable function">add</span> <span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span>b</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-           <span class="token keyword">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
-       <span class="token punctuation">}</span><span class="token punctuation">,</span>
-       <span class="token function-variable function">subtract</span> <span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span>b</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-           <span class="token keyword">return</span> a<span class="token operator">-</span>b<span class="token punctuation">;</span>
-       <span class="token punctuation">}</span>
-   <span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</pre><p>Notice the optional <code>description</code>, <code>requires</code>, and <code>version</code> variables.  These are alternatives to passing a <code>moduleInfo</code> object:</p>
-<ul>
-<li><code>description</code> <em>array</em> : (Optional) This passes a description of the module to the console, as well as to the <code>SmartModule.modules</code> variable so you can see which modules have been loaded, mainly for debugging purposes.  The first value is the module name, and the second is the description.</li>
-<li><code>requires</code> <em>array</em> : (Optional) A list of module dependencies for this module to run properly.  If your module requires functionality from another module, add it to the list.  A warning will be given if a module is loaded and none of its dependencies can be found.</li>
-<li><code>version</code> <em>string</em> : The current version of this module.  This may become important if another module relies on the use of this module, but needs a version older or newer than the current version.</li>
-</ul>
-<p>When you create a new instance of the API with a <code>new</code> operator, your modules added with the <code>SmartModule.addModule</code> function will load and initialize.  You cannot add new modules with the <code>SmartModule.addModule</code> function after creating a new instance of the API.  Instead, you will have to use the post-initialized functionality as seen here:</p>
-<hr>
-<h4 class="mume-header" id="defining-modules-after-the-api-has-already-been-initalized-with-the-new-operator-module-hot-loading">Defining modules after the API has already been initalized with the <code>new</code> operator (module <em>&quot;Hot-Loading&quot;</em>)</h4>
-
-<p>If you&apos;ve already initialized the API, the SmartModule.addModule function will no longer register added modules.  Instead, you will have to rely on the instance of the API you defined with the <code>new</code> operator and use its <code>addModule</code> function.  It works exactly the same way as the <code>SmartModule.addModule</code> function, but if you have dependencies, they will have to be loaded in the order of their needs.    For example:</p>
-<pre data-role="codeBlock" data-info="JAVASCRIPT" class="language-javascript">    <span class="token keyword">const</span> sm <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SmartModule</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    sm<span class="token punctuation">.</span><span class="token function">addModule</span><span class="token punctuation">(</span><span class="token string">&quot;mymodule&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
-            description <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;My Module&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;This is my custom smart module!&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-            requires <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;fileio&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;dialog&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-            <span class="token function-variable function">add</span> <span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span>b</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                <span class="token keyword">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
-            <span class="token punctuation">}</span><span class="token punctuation">,</span>
-            <span class="token function-variable function">subtract</span> <span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span>b</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                <span class="token keyword">return</span> a<span class="token operator">-</span>b<span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span><span class="token punctuation">)</span>
-    <span class="token punctuation">)</span><span class="token punctuation">;</span>
-</pre><p><strong>It is typically better</strong> to load the modules <strong>before</strong> initializing the API, but hot-loading modules is allowed.  If a module with the same name has already been loaded, an error will be thrown to let you know there&apos;s a conflict.</p>
-<hr>
-<h4 class="mume-header" id="accessing-other-modules-and-their-variablesfunctions-from-your-collection">Accessing other modules and their variables/functions from your collection</h4>
-
-<p>When you define a new module as a collection, it is given its own variable named <code>root</code>.  This gives you access to the core smart module definition and any modules it has loaded.  Take a look at the following:</p>
-<pre data-role="codeBlock" data-info="JAVASCRIPT" class="language-javascript">SmartModule<span class="token punctuation">.</span><span class="token function">addModule</span><span class="token punctuation">(</span><span class="token string">&quot;mymodule&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
-        description <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;My Module&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;This is my custom smart module!&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        requires <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;fileio&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;dialog&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token function-variable function">logFileContent</span> <span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">path</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">.</span>fileio<span class="token punctuation">.</span><span class="token function">readfile</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span> <span class="token parameter">fileContent</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-                console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>fileContent<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span><span class="token punctuation">,</span>
-        <span class="token function-variable function">echoToConsole</span> <span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">text</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</pre><p><code>this.root.fileio.readfile</code> is accessing the fileio module and utilizing its <code>readFile</code> function.  It is always preceded with <code>this</code> since it is a variable assigned only to your module.  You will always need to use the <code>this.root</code> variable in a collection of functions if you want access to other modules.</p>
-<p><strong>Alternatively, you may retrieve the initialized/active Smart Module object by reading the <code>SmartModule.activeInstance</code> variable.</strong>  However, if you configure the API to be able to run multiple instances simultaneously with the <code>allowMultipleInstances</code> argument, <em>this variable will only show the most recently initialized instance</em> and may break your modules if they rely on it.  If your module utilizes the <code>SmartModule.activeInstance</code> variable, you may want to check that the <code>SmartModule.instances</code> variable is not greater than 1.</p>
-<h4 class="mume-header" id="creating-a-single-function-or-single-value-module">Creating a <code>single function</code> or <code>single value</code> module</h4>
-
-<p>You can pass any type of element to the <code>SmartModule.addModule</code> function.  This includes a single function or even just a variable or object.</p>
-<pre data-role="codeBlock" data-info="JAVASCRIPT" class="language-javascript"><span class="token keyword">const</span> description <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">&quot;some variable&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;This is just a variable.  Not much more.&quot;</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-SmartModule<span class="token punctuation">.</span><span class="token function">addModule</span><span class="token punctuation">(</span><span class="token string">&quot;somevar&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;This module is just a string!&quot;</span><span class="token punctuation">,</span> description<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</pre><hr>
-<h2 class="mume-header" id="core-and-included-modules">Core and Included Modules</h2>
-
-<p>Smart Module includes some core modules to help you get started.  They are:</p>
-<h3 class="mume-header" id="fileio-nbsp-built-in"><strong><code>fileio</code></strong> &#xA0; (built-in)</h3>
-
-<p>A collection of file reading tools.  At this time it has only a file reading function.  For file writing, you would need to have server get/put functionality, so this is not included in <code>fileio</code>.</p>
-<ul>
-<li>
-<p><code>fileio.readFile(url, fn)</code> <em>async function</em> : Reads the file at the given URL and optionally runs a function on the returned data.  This function uses <code>promise</code> syntax and can therefore also utilize the <code>.then()</code> operator, ie:</p>
-<pre data-role="codeBlock" data-info="JAVASCRIPT" class="language-javascript">sm<span class="token punctuation">.</span>fileio<span class="token punctuation">.</span><span class="token function">readFile</span><span class="token punctuation">(</span><span class="token string">&quot;/files/myfile.txt&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span> <span class="token parameter">data</span> <span class="token operator">=&gt;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
-</pre></li>
-</ul>
-<h3 class="mume-header" id="ui-nbsp-smuijs"><strong><code>ui</code></strong> &#xA0;  (sm.ui.js)</h3>
-
-<p>A collection of tools for parsing HTML templates, showing modal dialogs, and doing basic HTML manipulation.  <strong>See the &quot;Using Templates&quot; section below for details on how to utilize templates to speed up your page designs.</strong></p>
-<ul>
-<li><code>ui.loadTemplate(path)</code> Gets all templates defined in the given template file and adds them to the sm.ui.template definitions variable.</li>
-<li><code>ui.htmlFromTemplate(templateName, values)</code> Parses the given template and assigns values to its variable placeholders within that template\</li>
-</ul>
-<p><strong>ui functions Currently in development:</strong></p>
-<ul>
-<li><code>ui.showModalWindow({options})</code> Show a modal window</li>
-<li><code>ui.showProgressBar()</code> Shows a progress bar with given values</li>
-<li><code>ui.jsonToFormValues()</code> Reads JSON and assigns form values based on the key names in the JSON object<br>
-There are more that will also be added as time goes on.</li>
-</ul>
-<h3 class="mume-header" id="nbsp-smqueryjs"><code>$</code> &#xA0; (sm.query.js)</h3>
-
-<p>A query tool for quickly finding elements in a document.  Uses standard query syntax, such as $(&quot;#someid .someclass&quot;).  Similar to frameworks such as jQuery, you can chain query functions together.</p>
-<ul>
-<li><code>$(query)</code> returns elements in the given query</li>
-<li><code>$(query).first</code> Gets the first element in a query</li>
-<li><code>$(query).last</code> Gets the last element in a query</li>
-<li><code>$(query).nodes</code> Gets a node list of elements returned in a query</li>
-<li><code>$(query).link(keyName,</code><em><code>setterFunction</code></em><code>)</code> Links a variable to the element&apos;s value so if either one changes, it also changes the value of its linked counterpart.  An optional <code>setterFunction</code> allows you to run a function when a value for the variable is set.</li>
-<li><code>$(query).unlink(keyName)</code> Unlinks a variable from the element&apos;s value</li>
-<li><code>$(query).hide()</code> Hides an element</li>
-<li><code>$(query).show()</code> Shows an element</li>
-<li><code>$(query).each(fn)</code> Runs a function on all returned elements in a query</li>
-<li><code>$(query).on(event, fn)</code> Adds an event to a DOM element</li>
-<li><code>$(query).val(value)</code> Assigns a value to a DOM element or gets the value if no arguments are given</li>
-<li><code>$(query).append(element)</code> Appends an element</li>
-<li><code>$(query).appendHtmlFromUrl(url)</code> Gets HTML from the given URL and appends it to the element\</li>
-</ul>
-<p>Many more query functions are being developed.</p>
-<hr>
-<h2 class="mume-header" id="using-templates-and-template-files">Using Templates and Template Files</h2>
-
-<p>Templates can be used to quickly append HTML to an element.  With the ui module, you can also fill placeholders with variable values within the template itself.  All templates are defined in HTML with <code>&lt;template&gt;</code> tags and all variable placeholders are defined with double brackets: <code>{{somevariable}}</code></p>
-<p>Let&apos;s take a look at the default template.html (<em>Figure A</em>) file located in the templates directory.</p>
-<pre data-role="codeBlock" data-info="HTML" class="language-html"><span class="token comment">&lt;!-- Figure A: template.html --&gt;</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span> <span class="token attr-name">testtemplate</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span>
-        {{title}}
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span>
-    A list with {{list.length}} items!
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">&gt;</span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">&gt;</span></span>{{container}}{{list}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
-
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span> <span class="token attr-name">my_template_name</span><span class="token punctuation">&gt;</span></span>
-    You should see some HTML here
-    {{html}}
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
-</pre><p>You&apos;ll see that each template has its name included in the tag.  This is the template name that will be defined in the Smart Module&apos;s <code>ui.template</code> object.</p>
-<h3 class="mume-header" id="loading-template-files"><strong>Loading template files</strong></h3>
-
-<p>Templates are not loaded by default.  You will have to load them with the <code>ui</code> module.  Here&apos;s an example:</p>
-<pre data-role="codeBlock" data-info="JAVASCRIPT" class="language-javascript"><span class="token keyword">const</span> sm <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SmartModule</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-sm<span class="token punctuation">.</span>ui<span class="token punctuation">.</span><span class="token function">loadTemplate</span><span class="token punctuation">(</span>SmartModule<span class="token punctuation">.</span>rootPath <span class="token operator">+</span> <span class="token string">&quot;templates/template.html&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
-    document<span class="token punctuation">.</span>body<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>sm<span class="token punctuation">.</span>ui<span class="token punctuation">.</span><span class="token function">htmlFromTemplate</span><span class="token punctuation">(</span><span class="token string">&apos;testtemplate&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-        title <span class="token punctuation">:</span> <span class="token string">&apos;Loaded Successfully!&apos;</span><span class="token punctuation">,</span>
-        container <span class="token punctuation">:</span> <span class="token string">&apos;&lt;span class=&quot;myclass&quot;&gt;&apos;</span><span class="token punctuation">,</span>
-        list <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;dog&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;cat&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;gorilla&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;snake&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;aardvark&quot;</span><span class="token punctuation">]</span>
-    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</pre><p>You may notice that the <code>ui.loadTemplate</code> function has a <code>.then()</code> operator.  This is because the <code>loadTemplate</code> function is asynchronous and returns a <code>promise</code>.  This is useful so you can tell it to load multiple templates in sequence or use <code>async wait</code> to wait until all templates are loaded before progressing.</p>
-<p>After your template is loaded, you can use the <code>ui.htmlFromTemplate(templateName, values)</code> function to pass it values for its variable placeholders.  Using the template HTML example above, let&apos;s pull out the code from our <code>.then()</code> operator in the first example, <em>Figure B</em>.</p>
-<pre data-role="codeBlock" data-info="JAVASCRIPT" class="language-javascript"><span class="token comment">// Figure B</span>
-document<span class="token punctuation">.</span>body<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>sm<span class="token punctuation">.</span>ui<span class="token punctuation">.</span><span class="token function">htmlFromTemplate</span><span class="token punctuation">(</span><span class="token string">&apos;testtemplate&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-    title <span class="token punctuation">:</span> <span class="token string">&apos;Loaded Successfully!&apos;</span><span class="token punctuation">,</span>
-    container <span class="token punctuation">:</span> <span class="token string">&apos;&lt;span class=&quot;myclass&quot;&gt;&apos;</span><span class="token punctuation">,</span>
-    list <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;dog&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;cat&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;gorilla&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;snake&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;aardvark&quot;</span><span class="token punctuation">]</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</pre><p>Notice that the value names in the second argument match the names in the HTML template.  This is so they are mapped to eachother.  You may also notice that we have an array being passed to the <code>list</code> variable as <code>[&quot;dog&quot;,&quot;cat&quot;,&quot;gorilla&quot;,&quot;snake&quot;,&quot;aardvark&quot;]</code>.  When an array is passed as a value to a template, it will duplicate whatever element holds the variable and add each array index value in sequence to the duplicated elements.</p>
-<p>For example, take a look at this line: <code>&lt;li&gt;{{container}}{{list}}&lt;/li&gt;</code><br>
-We&apos;ll get to the <code>{{container}}</code> variable in a second.  Let&apos;s focus on <code>{{list}}</code></p>
-<p>The <code>{{list}}</code> variable will be passed each of the values in the <code>list</code> array.  As each value is passed, its containing <code>&lt;li&gt;</code> element will be duplicated, along with any other variables that may be included within the same tag.  The template will show:</p>
-<pre data-role="codeBlock" data-info="HTML" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span>Loaded Successfully!<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span>
-A list with 5 items!
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>myclass<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>dog<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>myclass<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>cat<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>myclass<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>gorilla<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>myclass<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>snake<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>myclass<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>aardvark<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">&gt;</span></span>
-</pre><p>Notice how the <code>&lt;li&gt;</code> tag was duplicated to show each value of the <code>list</code> array.  It also duplicated the <code>{{container}}</code> variable&apos;s value, which happens to be <code>&lt;span class=&quot;myclass&quot;&gt;</code>.  Let&apos;s take a look at that <code>{{container}}</code> variable.</p>
-<p>Take a look back at <em>Figure B</em>.  If you have a variable defined as an HTML tag, it will add that tag and include any subsequent variables into it.<br>
-<code>&lt;li&gt;{{container}}{{list}}&lt;/li&gt;</code> is replacing <code>{{container}}</code> with a <code>&lt;span&gt;</code> and also including the <code>{{list}}</code> variable within the <code>&lt;span&gt;</code>.</p>
-<p>One thing you cannot do, however, is have two array variables within the same tag.  For example, if we had:</p>
-<pre data-role="codeBlock" data-info="HTML" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">&gt;</span></span>{{somelist}}{{list}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">&gt;</span></span>
-</pre><p>If <code>{{somelist}}</code> was an array, and <code>{{list}}</code> was also an array, you&apos;d get an error.  It would cause an infinite loop since each would be passing an array into each of the duplicated items over and over again.  The <code>ui</code> module won&apos;t allow that and will throw an error at you to let you know you have two arrays within the same tag.</p>
-<h3 class="mume-header" id="dot-values-in-a-template">Dot values in a template</h3>
-
-<p>In <em>Figure A</em> you may have noticed that we have a variable in the template named <code>{{list.length}}</code>.  You can pass a dotted value to a template for quick access to things such as array lengths.  Note that you can only have a single dotted value and you cannot pass a dotted value as a function such as <code>myvariable.toString()</code>.  Adding this capability would be a potential security issue if it were to be evaluated with an <code>eval</code> function.</p>
-<h2 class="mume-header" id="states">States</h2>
-
-<p>The SmartModule API has predefined states that you can use to determine what the current process is.  Those states are:</p>
-<ul>
-<li>SmartModule.STATE_UNKNOWN : -1</li>
-<li>SmartModule.STATE_IDLE : 0</li>
-<li>SmartModule.STATE_GETFILE : 1</li>
-<li>SmartModule.STATE_BUSY : 2</li>
-<li>SmartModule.STATE_AWAIT : 3</li>
-</ul>
-<p>States can be retrieved with your <code>new</code> Smart Module object.</p>
-<pre data-role="codeBlock" data-info="JAVASCRIPT" class="language-javascript"><span class="token keyword">const</span> sm <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SmartModule</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-sm<span class="token punctuation">.</span>ui<span class="token punctuation">.</span><span class="token function">loadTemplate</span><span class="token punctuation">(</span>SmartModule<span class="token punctuation">.</span>rootPath <span class="token operator">+</span> <span class="token string">&quot;templates/template.html&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>sm<span class="token punctuation">.</span>state<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// Should return 1 (STATE_GETFILE) since we&apos;re still retrieving the file</span>
-</pre><p>You can also get the active number of promises by getting <code>sm.activeAsync</code></p>
-<h2 class="mume-header" id="examples">Examples</h2>
-
-<p>See the examples directory to see how to use templates and map them to variables which are passed to them.</p>
-
-      </div>
-      
-      
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    </body></html>
+    function loadTemplate(target) {
+        sm.$("#document").first.src = `modules/${target}`;
+    }
+</script>

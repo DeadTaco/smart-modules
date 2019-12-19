@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../js/styles/default.css">
+        <script src="../../src/sm.core.js"></script>
+        <script src="../js/highlight.pack.js"></script>
+    </head>
+    <body class="iframe">
+        <h1 class="modulename">sm.ui.js</h1>
+        <h2 class="function">createDialog( <i>options</i> )</h2>
+        <h3>Purpose</h3>
+        <p>
+            <b>Creates</b> and <b>returns</b> a <b>Smart Module Dialog object</b>; a floating, draggable dialog that can be locked into an optional container element.
+        </p>
+<!-- OPTIONS -->
+        <block>
+            <h3>Options ( object )</h3>
+            <ul>
+                <li>
+                    <span class="module-item">title</span>:<span class="type">html</span>
+                    <p>The dialog box title as plain text or HTML</p>
+                </li>
+                <li>
+                    <span class="module-item">html</span>:<span class="type">html</span>
+                    <p>HTML Content of the dialog's content area</p>
+                </li>
+                <li>
+                    <span class="module-item">width</span>:<span class="type">number or string</span>
+                    <p>Width of the dialog box.  Default units are pixels, but any css unit (number, em, px, percent, auto) can be passed</p>
+                </li>
+                <li>
+                    <span class="module-item">height</span>:<span class="type">number or string</span>
+                    <p>Height of the dialog box.  Default units are pixels, but any css unit (number, em, px, percent, auto) can be passed</p>
+                </li>
+                <li>
+                    <span class="module-item">classes</span>:<span class="type">string</span>
+                    <p>Applies the provided list of classes to the dialog box.  The list is a string of classes, separated by spaces.  The classes are applied to the entire dialog box.</p>
+                </li>
+                <li>
+                    <span class="module-item">buttons</span>:<span class="type">object</span>
+                    <p>An object containing button definitions.  If no buttons are defined, a default "Ok" button will be added.  Buttons and their text are defined by the key names provided.  For example:</p>
+
+                    <pre class="inset">
+buttons : {
+    "Read More" : ()=>window.open("https://en.wikipedia.org/wiki/Whale_shark"),
+    "Ok" : (dialog)=>dialog.remove()
+}</pre>
+<p>The key names are the text shown in the button itself.  Its value is the function to run when that button is clicked.</p>
+                </li>
+            </ul>
+        </block>
+
+<!-- METHODS -->   
+
+<block class="methods">
+    <h3>Methods</h3>
+    <p>The following are methods of the returned <b>Smart Module Dialog object</b></p>
+    <ul>
+        <li>
+            <span class="method-item function">resize</span><span class="method-vars">(width, height)</span>
+            <div class="variable">width</div>
+            <div class="type">CSS-styled width as number or string</div>
+            <div class="description">The width of the dialog box as number, em, px, percent, auto.  Default unit is pixels if only a number is provided.</div>
+            <div class="variable">height</div>
+            <div class="type">CSS-styled height as number or string</div>
+            <div class="description">The height of the dialog box as number, em, px, percent, auto.  Default unit is pixels if only a number is provided.</div>
+        </li>
+        <hr>
+        <li>
+            <span class="method-item function">hide</span><span class="method-vars">()</span>
+            <div class="description">Hides the dialog box, but retains it within the document</div>
+        </li>
+        <hr>
+        <li>
+            <span class="method-item function">show</span><span class="method-vars">()</span>
+            <div class="description">Shows the hidden dialog box</div>
+        </li>
+        <hr>
+        <li>
+            <span class="method-item function">remove</span><span class="method-vars">()</span>
+            <div class="description">Removes the dialog from the DOM.  Note that the dialog may remain in memory if a variable continues to point to it.</div>
+        </li>        
+        <hr>
+        <li>
+            <span class="method-item function">html</span><span class="method-vars">(html)</span>
+            <div class="variable optional">html</div>
+            <div class="type">A standard string containing HTML or plain text</div>
+            <div class="description">Gets or sets the HTML of the content area of the dialog.  If no html is passed, the dialog's HTML content is returned as a string.</div>
+        </li>
+        <hr>
+        <li>
+            <span class="method-item function">title</span><span class="method-vars">(html)</span>
+            <div class="variable optional">html</div>
+            <div class="type">A standard string containing HTML or plain text</div>
+            <div class="description">Gets or sets the title of the dialog.  If no html is passed, the dialog's title HTML content is returned as a string.</div>
+        </li>
+        <hr>
+        <li>
+            <span class="method-item function">footer</span><span class="method-vars">(html)</span>
+            <div class="variable optional">html</div>
+            <div class="type">A standard string containing HTML or plain text</div>
+            <div class="description">Gets or sets the HTML of the footer area of the dialog.  If no html is passed, the dialog's footer HTML content is returned as a string.<br>Note that if the footer HTML is manually set, any existing dialog buttons will be destroyed.</div>
+        </li>                                             
+    </ul>            
+</block>
+    
+
+<!-- EXAMPLES -->
+<div class="example"></div>
+<pre><code class="javascript">
+// Initialize the smart module API and include the UI module
+const sm = new SmartModule({
+    modules: ["ui"],
+    init: (sm)=> {
+        createExampleDialog();
+    }
+});
+
+// Create a new dialog box
+function createExampleDialog() {
+    const newDialog = sm.ui.createDialog({ 
+        title : "The Whale Shark", 
+        html : `
+            The whale shark (Rhincodon typus) is a slow-moving, 
+            filter-feeding carpet shark and the largest known extant 
+            fish species. The largest confirmed individual had a length
+            of 18.8 m (62 ft)`,
+        width: 320,
+        height:"auto",
+        buttons : {
+            "Read More" : ()=>window.open("https://en.wikipedia.org/wiki/Whale_shark"),
+            "Ok" : (dialog)=>dialog.remove()
+        }
+    })
+}      
+</code></pre>
+
+<div>The above example will give you the following:</div>
+<img src="img/ui_createDialog.jpg" alt="Create Dialog Example">
+    </div>
+    </body>
+</html>
+
+<script>
+    hljs.initHighlightingOnLoad(); // Code highlighting - 3rd party utilizing highlight.js
+</script>
+
+

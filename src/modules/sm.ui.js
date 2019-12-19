@@ -13,7 +13,7 @@ SmartModule.addModule("ui", (
             });
             element.addEventListener('mouseleave', e=>{
                 this.hideTooltip();
-            });            
+            });
         },
         showTooltip : function(element) {
             console.log("Show a tooltip for this element", element);
@@ -250,20 +250,6 @@ SmartModule.addModule("ui", (
 
         // Creates a dialog box object with provided options
         createDialog(options = {}) {
-            /*
-            showDialog options object Example:  -> MOVE TO MARKDOWN DOCUMENT!
-            ({ title : "Some title", 
-               buttons : [
-                    "ok" : someFunctionWhenClicked,
-                    "cancel" : someotherFunction
-               ],
-               html : "My text content or HTML here",
-               width : 100,
-               height : 100
-               classes : "dialogclass otherclass",
-               onClose : function() {} // Function that runs when the dialog is closed
-            });   
-            */         
             let title = options.title || "Title";
             let html = options.html || "Empty";
             let width = options.width || 300;
@@ -390,7 +376,6 @@ SmartModule.addModule("ui", (
                 this.remove = function() {
                     if(options.onClose) options.onClose(self);
                     self.node.parentNode.removeChild(self.node);
-                    delete this;    // This most likely does nothing.  Any variables pointing to this dialog need to be nullified.
                 }           
             }
             newDialogBox = new Dialog(dBox);

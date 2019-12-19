@@ -10,7 +10,12 @@ SmartModule.addModule("events", {
   ],
   eventList: {},
   add(querySelector, eventName, evt) {
-    let nodes = document.querySelectorAll(querySelector);
+    let nodes;
+    if(typeof querySelector == "string") {
+      nodes = document.querySelectorAll(querySelector);
+    } else {  
+      nodes = querySelector;
+    }
     Array.from(nodes).map(node => {
       // Keep a tally of what events are added to an element.  For debugging as well as preventing duplicates
       if (!this.eventList[node]) this.eventList[node] = {};
@@ -26,7 +31,12 @@ SmartModule.addModule("events", {
     return nodes;
   },
   remove(querySelector, eventName) {
-    let nodes = document.querySelectorAll(querySelector);
+    let nodes;
+    if(typeof querySelector == "string") {
+      nodes = document.querySelectorAll(querySelector);
+    } else {  
+      nodes = querySelector;
+    }
     // Keep a tally of what events are removed from an element.  For debugging as well as preventing duplicates
     Array.from(nodes).map(node => {
       if (this.eventList[node]) {
@@ -39,7 +49,12 @@ SmartModule.addModule("events", {
     return nodes;
   },
   removeAll(querySelector) {
-    let nodes = document.querySelectorAll(querySelector);
+    let nodes;
+    if(typeof querySelector == "string") {
+      nodes = document.querySelectorAll(querySelector);
+    } else {  
+      nodes = querySelector;
+    }
     // Keep a tally of what events are removed from an element.  For debugging as well as preventing duplicates
     Array.from(nodes).map(node => {
       if (this.eventList[node]) {
