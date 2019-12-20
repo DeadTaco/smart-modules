@@ -3,7 +3,7 @@ SmartModule.addModule("menu", (
     {
         description : ["sm.menu.js", "Classic Window Menus"],
         requires : [],
-        version : "1.0",
+        version : "0.1",
         createMenu(menuElements, container) {
             
             // MenuNode contains all of the elements for a menu group and its child nodes (sub menus)
