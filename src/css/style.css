@@ -91,8 +91,9 @@
   position: relative;
 }
 
-.sm-menu:focus {
-  display: none;
+.sm-menu hr {
+  padding: 0px;
+  margin: 0px;
 }
 
 .sm-menu .sm-menu-group {
@@ -101,9 +102,9 @@
   height: auto;
   padding: 0px;
   overflow: visible;
-  background-color: #e6e6e6;
+  background-color: color_menugroup;
   cursor: pointer;
-  z-index: 10;
+  z-index: 1000;
   width: auto;
   position: absolute;
 }
@@ -166,4 +167,13 @@
   bottom: -0.1em;
   background-color: #e6e6e6;
   color: black;
+}
+
+.sm-menu.inactive .sm-menu-item:hover {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  color: white !important;
+}
+
+.sm-menu.inactive .sm-menu-item:hover .sm-menu-group {
+  display: none     !important;
 }

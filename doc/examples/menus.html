@@ -24,112 +24,120 @@
         }
     });
 
+    function runAction(action) {
+        let div = document.createElement("div");
+        div.style = "padding-left:150px;"
+        div.innerHTML = action;
+        document.body.append(div);
+    }
+
     function init(sm) {
         sm.menu.createMenu([
             { 
                 title : "File",
-                action : e=>console.log("file"),
+                action :e=>runAction("file"),
                 submenu : [
                     {   
                         title : "Open",
                         icon:"sm-icon-open",
-                        action : e=>console.log("open"),
+                        action :e=>runAction("open"),
                     },
                     {   
                         title : "Save",
-                        action : e=>console.log("save"),
+                        action :e=>runAction("save"),
                     },
                     { 
                         title : "Save As",
-                        action : e=>console.log("saveas"),
+                        action :e=>runAction("saveas"),
                         submenu : [
                             { 
                                 title : "Excel",
-                                action : e=>console.log("excel"),
+                                action :e=>runAction("excel"),
                             },
                             { 
                                 title : "Text",
-                                action : e=>console.log("text"),
+                                action :e=>runAction("text"),
                             }                          
                         ]  
                     },
+                    "-",
                     {
                         title : "Exit",
-                        action : e=>console.log("exit"),
+                        action :e=>runAction("exit"),
                     }
                 ]
             },
             { 
                 title : "Edit",
-                action : e=>console.log("Edit"),
+                action :e=>runAction("Edit"),
                 submenu : [
                     {   
                         title : "Copy",
-                        action : e=>console.log("paste"),
+                        action :e=>runAction("paste"),
                     },
                     {   
                         title : "Cut",
-                        action : e=>console.log("cut"),
+                        action :e=>runAction("cut"),
                     },
                     { 
                         title : "Paste",
-                        action : e=>console.log("saveas"),
+                        action :e=>runAction("saveas"),
                         submenu : [
                             { 
                                 title : "Excel",
-                                action : e=>console.log("excel"),
+                                action :e=>runAction("excel"),
                             },
                             { 
                                 title : "Text",
-                                action : e=>console.log("text"),
+                                action :e=>runAction("text"),
                             }                          
                         ]  
                     },
                     {
                         title : "Exit",
-                        action : e=>console.log("exit"),
+                        action :e=>runAction("exit"),
                     }
                 ]
             },
             { 
                 title : "Options",
-                action : e=>console.log("Options"),
+                action :e=>runAction("Options"),
                 submenu : [
                     {   
                         title : "Option 1",
-                        action : e=>console.log("1"),
+                        action :e=>runAction("1"),
                     },
                     {   
                         title : "Option 2",
-                        action : e=>console.log("2"),
+                        action :e=>runAction("2"),
                     },
                     { 
                         title : "Sub Options",
-                        action : e=>console.log("3"),
+                        action :e=>runAction("3"),
                         submenu : [
                             { 
                                 title : "Sub Option 1",
-                                action : e=>console.log("s1"),
+                                action :e=>runAction("s1"),
                                 submenu : [
                                     { 
                                         title : "Sub Option 1",
-                                        action : e=>console.log("s1"),
+                                        action :e=>runAction("s1"),
                                     },
                                     { 
                                         title : "Sub Option 2",
-                                        action : e=>console.log("s2"),
+                                        action :e=>runAction("s2"),
                                     }                          
                                 ]                                 
                             },
                             { 
                                 title : "Sub Option 2",
-                                action : e=>console.log("s2"),
+                                action :e=>runAction("s2"),
                             }                          
                         ]  
                     },
                     {
                         title : "Exit",
-                        action : e=>console.log("exit"),
+                        action :e=>runAction("exit"),
                     }
                 ]
             }                         

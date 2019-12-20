@@ -20,7 +20,7 @@ SmartModule.addModule("menu", (
             } else {
                 menuBar = container.querySelector(".sm-menu");
             }
- 
+            menuBar.classList.add("inactive");
             buildMenu(menuElements, true);
             
             // Build the menu elements by traversing the menu tree
@@ -31,19 +31,26 @@ SmartModule.addModule("menu", (
                 if(isRoot) menuGroupDiv.classList.add("sm-menu-root");     // Root menu items are styled differently than their sub menus.   
                 parent.append(menuGroupDiv);        
                 menu.map(menuItem => {
-                    let menuDiv = document.createElement("div");
-                    menuDiv.classList.add("sm-menu-item");
-                    menuDiv.innerHTML = "<span>" + menuItem.title + "</span>";
+                    let menuDiv = null;
+                    if(typeof menuItem == "string") {
+                        menuDiv = document.createElement("hr");
+                        
+                    } else {
+                        menuDiv = document.createElement("div");
+                        menuDiv.classList.add("sm-menu-item");
+                        menuDiv.innerHTML = "<span>" + menuItem.title + "</span>";
+                        menuDiv.addEventListener("click", e=>{
+                            if( menuBar.classList.contains("inactive") ) {
+                                menuBar.classList.remove("inactive");
+                            } else {
+                                menuBar.classList.add("inactive");
+                            }
+                            e.stopPropagation();
+                            menuItem.action(e);
+                        });
+                    }
                     menuGroupDiv.append(menuDiv);
-                    menuDiv.addEventListener("click", e=>{
-                        e.stopPropagation();
-                        menuItem.action(e);
-                    });
-                    let lastSubMenu = null;
-
-                    menuDiv.addEventListener("mouseenter", e=>{
-
-                    });                    
+               
                     if(menuItem.submenu) {
                         let newMenu = buildMenu(menuItem.submenu, false, menuDiv);
                         // menuDiv.addEventListener("click", e=>showSubMenu(newMenu, e.target));
@@ -58,6 +65,15 @@ SmartModule.addModule("menu", (
                 return menuGroupDiv;
             }
 
+            menuBar.addEventListener("click", ()=>{
+                if( menuBar.classList.contains("inactive") ) {
+                    menuBar.classList.remove("inactive");
+                } else {
+                    menuBar.classList.add("inactive");
+                }
+            });
+
+            return menuBar;
         },
      }
 ));
