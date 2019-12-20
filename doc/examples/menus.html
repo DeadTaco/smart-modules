@@ -32,7 +32,7 @@
     }
 
     function init(sm) {
-        sm.menu.createMenu([
+        window.sm_menu = sm.menu.createMenu([
             { 
                 title : "File",
                 action :e=>runAction("file"),
@@ -140,7 +140,7 @@
                         action :e=>runAction("exit"),
                     }
                 ]
-            }                         
+            }                      
         ]);
     } // end init()
 
