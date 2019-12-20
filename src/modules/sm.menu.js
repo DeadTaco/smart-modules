@@ -11,53 +11,53 @@ SmartModule.addModule("menu", (
                 this.name = "root_node";
                 this.subMenus = [];
                 this.isRoot = false;
-
-                // Retrieves a node based on its path, separated by dotted values, i.e. file.saveas.text finds the node in the path file -> saveas -> text
-                this.getNodeByPath = function(nodePath) {
-                    nodePath = nodePath.toLowerCase();
-                    let nodes = nodePath.split(".");
-                    let thisNode = this;
-                    let foundNode = false;
-                    for(let i = 0; i < nodes.length; i++) {
-                        foundNode = thisNode.getNodeByName(nodes[i]);
-                        if(foundNode) {
-                            thisNode = foundNode;
-                        }
-                    }
-                    return foundNode;
-                }
-                this.getNodeByName = function(name) {
-                    name = name.toLowerCase();
-                    let nodes = this.subMenus;
-                    for(let i = 0; i < nodes.length; i++) {
-                        if(this.subMenus[i].name.toLowerCase() == name)  return this.subMenus[i];
-                    }
-                    return false;
-                }
-
-                // Add a sub-menu item to an existing item
-                this.addItem = function(itemData) {
-                    let parentNode = this; 
-                    let parentDom = this.domElement;
-                    let isRoot = this.isRoot;
-                    if(isRoot) {
-                        // itemData.subMenus = [];
-                        this.domElement = this.domElement.parentElement;
-                    }
-                    // buildMenu([itemData], false, parentDom, parentNode);
-                    let menuGroupDiv = null;
-                    if(!this.domElement.querySelector(".sm-menu-group")) {
-                        menuGroupDiv = document.createElement("div");
-                        menuGroupDiv.classList.add("sm-menu-group");
-                        this.domElement.append(menuGroupDiv);
-                        if(!this.domElement.classList.contains("sm-menu-rootitem")) this.domElement.classList.add("sm-menu-haschildren");
-                    } else {
-                        menuGroupDiv = this.domElement.querySelector(".sm-menu-group");
-                    }
-                    let newMenuNode = addMenuNode(itemData, menuGroupDiv, parentNode, parentDom, isRoot);
-                    return newMenuNode;
-                }
             }
+            // Retrieves a node based on its path, separated by dotted values, i.e. file.saveas.text finds the node in the path file -> saveas -> text
+            MenuNode.prototype.getNodeByPath = function(nodePath) {
+                nodePath = nodePath.toLowerCase();
+                let nodes = nodePath.split(".");
+                let thisNode = this;
+                let foundNode = false;
+                for(let i = 0; i < nodes.length; i++) {
+                    foundNode = thisNode.getNodeByName(nodes[i]);
+                    if(foundNode) {
+                        thisNode = foundNode;
+                    }
+                }
+                return foundNode;
+            }
+            MenuNode.prototype.getNodeByName = function(name) {
+                name = name.toLowerCase();
+                let nodes = this.subMenus;
+                for(let i = 0; i < nodes.length; i++) {
+                    if(this.subMenus[i].name.toLowerCase() == name)  return this.subMenus[i];
+                }
+                return false;
+            }
+
+            // Add a sub-menu item to an existing item
+            MenuNode.prototype.addItem = function(itemData) {
+                let parentNode = this; 
+                let parentDom = this.domElement;
+                let isRoot = this.isRoot;
+                if(isRoot) {
+                    // itemData.subMenus = [];
+                    this.domElement = this.domElement.parentElement;
+                }
+                // buildMenu([itemData], false, parentDom, parentNode);
+                let menuGroupDiv = null;
+                if(!this.domElement.querySelector(".sm-menu-group")) {
+                    menuGroupDiv = document.createElement("div");
+                    menuGroupDiv.classList.add("sm-menu-group");
+                    this.domElement.append(menuGroupDiv);
+                    if(!this.domElement.classList.contains("sm-menu-rootitem")) this.domElement.classList.add("sm-menu-haschildren");
+                } else {
+                    menuGroupDiv = this.domElement.querySelector(".sm-menu-group");
+                }
+                let newMenuNode = addMenuNode(itemData, menuGroupDiv, parentNode, parentDom, isRoot);
+                return newMenuNode;
+            }
+
             let rootMenuNode = new MenuNode();
             rootMenuNode.isRoot = true;     // Start with root nodes
             
