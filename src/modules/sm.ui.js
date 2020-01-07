@@ -112,36 +112,51 @@ SmartModule.addModule("ui", (
                 dragElement = document.querySelector(dragElement);
             }
             options = options || {};
-            options.container = options.container || window;
+            options.container = options.container || document.body;
                if(typeof domElement == "string") {
                 domElement = document.querySelector(domElement);
             }            
             if(typeof options.container == "string") {
                 options.container = document.querySelector(options.container);
             }
-            if(options.keepOnTop) domElement.style.zIndex = 10000;   // Keep modal dialogs always on top
+            domElement.classList.add("sm-draggable");
+            if(options.keepOnTop) domElement.style.zIndex = 1000;   // Keep modal dialogs always on top, also bring to top if dragged
             let movementLocked = [false,false]; // Mouse is outside the container.  Don't allow movement.
             var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
             let startPos = [0,0];    // Starting offset position of mouse
             if (dragElement) {
-              // if present, the header is where you move the DIV from:
-              dragElement.onmousedown = dragMouseDown;
+                // if present, the provided drag element is where you drag the dom Element from:
+                dragElement.onmousedown = dragMouseDown;
+                domElement.onmousedown = ()=>{
+                    moveToTop(domElement);
+                }                
             } else {
-              // otherwise, move the DIV from anywhere inside the DIV:
-              domElement.onmousedown = dragMouseDown;
+                // otherwise, move the dom element from anywhere inside the container:
+                domElement.onmousedown = evt=>{
+                    moveToTop(domElement);
+                    dragMouseDown(evt);
+                }
+            }
+
+            function moveToTop(element) {
+                let siblings = Array.from(options.container.querySelectorAll(".sm-draggable"));
+                let lastSibling = siblings[siblings.length-1];
+                // Move the actively dragged element to the top of the z-index
+                lastSibling.parentNode.insertBefore(element, lastSibling.nextSibling);
             }
           
             function dragMouseDown(e) {
-              e = e || window.event;
-              e.preventDefault();
-              // get the mouse cursor position at startup:
-              movementLocked = [false,false]
-              pos3 = e.clientX;
-              pos4 = e.clientY;
-              startPos = [e.clientX - domElement.offsetLeft, e.clientY - domElement.offsetTop];
-              document.onmouseup = closeDragElement;
-              // call a function whenever the cursor moves:
-              document.onmousemove = elementDrag;
+                e = e || window.event;
+                e.preventDefault();
+                movementLocked = [false,false];
+                moveToTop(domElement);
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                // get the mouse cursor position at startup:                
+                startPos = [e.clientX - domElement.offsetLeft, e.clientY - domElement.offsetTop];
+                document.onmouseup = closeDragElement;
+                // call a function whenever the cursor moves:
+                document.onmousemove = elementDrag;
             }
           
             function elementDrag(e) {
@@ -170,8 +185,8 @@ SmartModule.addModule("ui", (
                 let sourceSize = [domElement.clientWidth, domElement.clientHeight];
                 let sourceOffset = [domElement.offsetLeft, domElement.offsetTop];
                 let containerSize = [], containerOffset = [];
-                if(options.container == window) {
-                    containerSize = [window.innerWidth, window.innerHeight];
+                if(options.container == document.body) {
+                    containerSize = [document.body.clientWidth, document.body.clientHeight];
                     containerOffset = [0,0];
                 } else {
                     containerSize = [options.container.clientWidth, options.container.clientHeight];
