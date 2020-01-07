@@ -402,9 +402,8 @@ SmartModule.addModule("ui", (
                         offsetLeft = -3 + e.clientX + "px";   
                     }
                     if(gripName == "topright") {
-                        newWidth = startGeometry.width + (startClickPoint[0] - e.clientX);
+                        newWidth = startGeometry.width + (e.clientX - startClickPoint[0]);
                         newHeight = startGeometry.height + (startClickPoint[1] - e.clientY);
-                        offsetLeft = -3 + e.clientX + "px";   
                         offsetTop = -3 + e.clientY + "px";   
                     }
                     self.resizeDialog(domElement, newWidth, newHeight, true);
