@@ -47,17 +47,41 @@
                         action :e=>runAction("save"),
                     },
                     { 
-                        title : "Save As",
-                        action :e=>runAction("saveas"),
+                        title : "Menu Test",
+                        action :e=>runAction("Menu Test"),
                         submenu : [
                             { 
-                                title : "Excel",
-                                action :e=>runAction("excel"),
+                                title : "Sub Menu Test 1",
+                                action :e=>runAction("Sub Menu Test 1"),
+                                submenu : [
+                                    { 
+                                        title : "Sub Menu 1",
+                                        action :e=>runAction("Sub Menu 1"),
+                                    },
+                                    { 
+                                        title : "Sub Menu 2",
+                                        action :e=>runAction("Sub Menu 2"),
+                                    },
+                                    { 
+                                        title : "Sub Menu 3",
+                                        action :e=>runAction("Sub Menu 3"),
+                                    },
+                                    { 
+                                        title : "Sub Menu 4",
+                                        action :e=>runAction("Sub Menu 4"),
+                                    }                                                                   
+                                ]                                  
                             },
                             { 
-                                title : "Text",
-                                action :e=>runAction("text"),
-                            }                          
+                                title : "Sub Menu Test 2",
+                                action :e=>runAction("Sub Menu Test 2"),
+                                submenu : [
+                                    { 
+                                        title : "Sub Menu Alt 1",
+                                        action :e=>runAction("Sub Menu Alt 1"),
+                                    }                       
+                                ]                                  
+                            },                      
                         ]  
                     },
                     "-",
@@ -73,29 +97,39 @@
                 submenu : [
                     {   
                         title : "Copy",
-                        action :e=>runAction("paste"),
+                        action :e=>runAction("Copy"),
                     },
                     {   
                         title : "Cut",
-                        action :e=>runAction("cut"),
+                        action :e=>runAction("Cut"),
                     },
                     { 
                         title : "Paste",
-                        action :e=>runAction("saveas"),
+                        action :e=>runAction("Paste"),
                         submenu : [
                             { 
-                                title : "Excel",
-                                action :e=>runAction("excel"),
+                                title : "In Place",
+                                action :e=>runAction("In Place"),
                             },
                             { 
-                                title : "Text",
-                                action :e=>runAction("text"),
+                                title : "Without Formatting",
+                                action :e=>runAction("Without Formatting"),
                             }                          
                         ]  
                     },
                     {
-                        title : "Exit",
-                        action :e=>runAction("exit"),
+                        title : "Submenu Test",
+                        action :e=>runAction("Submenu Test"),
+                        submenu : [
+                            { 
+                                title : "Option 1",
+                                action :e=>runAction("Option 1"),
+                            },
+                            { 
+                                title : "Option 2",
+                                action :e=>runAction("Option 2"),
+                            }                          
+                        ] 
                     }
                 ]
             },
@@ -122,11 +156,7 @@
                                     { 
                                         title : "Sub Option 1",
                                         action :e=>runAction("s1"),
-                                    },
-                                    { 
-                                        title : "Sub Option 2",
-                                        action :e=>runAction("s2"),
-                                    }                          
+                                    }                      
                                 ]                                 
                             },
                             { 
@@ -136,8 +166,8 @@
                         ]  
                     },
                     {
-                        title : "Exit",
-                        action :e=>runAction("exit"),
+                        title : "Preferences",
+                        action :e=>runAction("prefs"),
                     }
                 ]
             }                      

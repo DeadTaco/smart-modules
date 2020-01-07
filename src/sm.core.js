@@ -165,12 +165,18 @@ const SmartModule = (function() {
             let description = modInfo.description || false;
             
             let requirements = modInfo.requires;
+            
             if(!appendToModule) {
+                // Make sure we're not extending an existing module.
                 if(smartModule.prototype[mod]) throw new Error(`Warning!  A module with the name ${mod} already exists!  `);
                 smartModule.prototype[mod] = fn;
                 if(typeof fn === "object") {
                     smartModule.prototype[mod].root = $root; // Assign a root variable to any collection modules
                     smartModule.prototype[mod].moduleName = mod; // Assign a module name variable to any collection modules
+                }
+                // If the module has a function to run on initialization, run it now
+                if(smartModule.prototype[mod].initialize) {
+                    smartModule.prototype[mod].initialize();
                 }
             } else {
                 // We're extending an already existing module (appending to the module object).
@@ -284,14 +290,14 @@ SmartModule.loadModule = function(moduleName) {
 
 // File reading and writing
 SmartModule.addModule("fileio", ({
-        description : ["fileio", "[Native Module] File Controller: input and output"],
+        description : ["fileio", "[Native Module] File Controller: Retrieve files from URLs"],
         version : "1.0",
-        // Retrieves a file, then runs the function assigned to fn
+        // Retrieves a file from the given URL, then runs the function assigned to fn
         getFile : function(path, fn, noCache = false) {
             this.root.currentState = SmartModule.STATE_LOADFILE; // APP STATES
             this.root.activeAsync++;    // Let's us know we have an active async/promise running
             let $this = this;
-            // Prevent loading a cached version of the requested file/path
+            // Prevent loading a cached version of the requested file/path by appending a GET value
             if(noCache) path = path + "?nocache=1";
             let promise = new Promise((resolve, reject) => {
                 var xhttp = new XMLHttpRequest();
@@ -313,10 +319,10 @@ SmartModule.addModule("fileio", ({
 );
 
 // Animate any value over the given time with a simple animation controller
+// Still in development, but currently working, albeit in limited capacity
 SmartModule.addModule("animate", ({
         description : ["animate", "[Native Module] Animation Controller: Sets the value any given variable over time"],
-        version : "1.0",
-        // Retrieves a file, then runs the function assigned to fn
+        version : "0.1",
         run(options = {}) {
             // options: sourceElement, sourceVariable, from, to, easing, type, tick, appendString
             // Easing is not yet implemented but will be soon!

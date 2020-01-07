@@ -4,6 +4,25 @@
 
 The Smart Module API is currently in development and is a small ES6+ Javascript framework for wrapping modules into a single Javascript object.  Each module has access to other modules that are loaded, as well as any variables within the API itself.
 
+## To Do
+
+* Automatically load required modules for any modules requesting them
+* fileio module needs ability to upload files.  Currently, it can only receive files
+* sm.menu.js needs to keep root menus open when the mouse leaves the menu group
+* sm.menu.js needs icons and additional stylings for allowing icons before menu item text
+* Animation module to be completed
+  * Add easing capability
+  * Add animation chaining capability
+* sm.ui.js - Add ability to resize dialogs and modal elements
+* Memory management: Module cleanup to make sure prototypes are in use where applicable
+
+## What's new
+
+* Modules can include an initialize() function which will automatically be run when the module is loaded
+* sm.menu.js - Menu module added for top-of-window menu systems.
+* sm.ui.js - Added dialog boxes and ability to turn any element into a modal, draggable element
+* Can now extend existing modules with the addModule function
+
 ## Getting Started
 
 You will need to have the sm.core.js script loaded into your page.  It controls the loading of all other modules.
