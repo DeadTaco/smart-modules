@@ -338,7 +338,6 @@ SmartModule.addModule("ui", (
                 e = e || window.event;
                 e.preventDefault();
                 let grip = e.target;
-                console.log(domElement);
                 // get the mouse cursor position at startup:
                 let posX = e.clientX;
                 let posY = e.clientY;
@@ -367,10 +366,8 @@ SmartModule.addModule("ui", (
                     e = e || window.event;
                     e.preventDefault();
                     let containerPadding = 8; // Don't allow the box to be resized outside of the container with this set padding
-                    console.log(gripName, window.innerHeight);
                     // Don't allow going outside window bounds
                     if(e.clientX > window.innerWidth - (containerPadding + 1) || e.clientX < (containerPadding + 1) || e.clientY > window.innerHeight - (containerPadding + 1) || e.clientY < (containerPadding + 1) ) return;
-                    // console.log(`Mouse: ${e.clientX}, ${e.clientY} || New Height: ${newHeight}`);
 
                     if(gripName == "bottommiddle") {
                         newHeight = startGeometry.height + (e.clientY - startClickPoint[1]);
