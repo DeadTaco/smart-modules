@@ -10,12 +10,12 @@ SmartModule.addModule("menu", (
             let MenuNode = function() {
                 this.name = "root_node";
                 this.subMenus = [];
-                this.isRoot = false;
+                this.isRoot = false; // By default, we don't want this node to be a root node unless specifically set as such
             }
-            // Retrieves a node based on its path, separated by dotted values, i.e. file.saveas.text finds the node in the path file -> saveas -> text
+            // Retrieves a node based on its path, separated by double-dotted values, i.e. file..saveas..text finds the node in the path file -> saveas -> text
             MenuNode.prototype.getNodeByPath = function(nodePath) {
                 nodePath = nodePath.toLowerCase();
-                let nodes = nodePath.split(".");
+                let nodes = nodePath.split("..");
                 let thisNode = this;
                 let foundNode = false;
                 for(let i = 0; i < nodes.length; i++) {
