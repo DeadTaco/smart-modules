@@ -20,7 +20,7 @@ SmartModule.addModule("ui", (
         },
         hideTooltip : function() {
             console.log("Hide a tooltip for this element.");
-        },        
+        },
 
         // Loads a template html file and appends it to the dialog variable "template".  This returns a promise, so you can use the ().then operator for async operations
         loadTemplate : function(templateName) {
@@ -311,9 +311,12 @@ SmartModule.addModule("ui", (
             // We have a dialog to work with, so get it prepared
             // Use internal resizeDialog function to set the dialog size
             resizeDialog(dBox, options.width, options.height);
+            // Add widgets for resizing the dialog
+            addDialogResizingGrips(dBox);
 
             // Resizes the given dialog box and recenters it back to its original position.  This function is called in a few places.
-            function resizeDialog(dialogBox, width, height) {
+            // @param: keepAnchored -> Keeps the dialog anchored to the top-left corner when being resized
+            function resizeDialog(dialogBox, width, height, keepAnchored) {
                 if(Number(width).toString() != "NaN") width = width + "px"; 
                 if(Number(height).toString() != "NaN") height = height + "px";
                 // Calculate offsets for the newly sized dialog
@@ -324,8 +327,10 @@ SmartModule.addModule("ui", (
                 // Apply new values and offsets to the main dialog box
                 dialogBox.style.height = height;
                 dialogBox.style.width = width;
-                dialogBox.style.left = (oldOffsetLeft - ((dialogBox.clientWidth - oldWidth)/2)) + "px";
-                dialogBox.style.top = (oldOffsetTop - ((dialogBox.clientHeight - oldHeight)/2)) + "px";
+                if(!keepAnchored) {
+                    dialogBox.style.left = (oldOffsetLeft - ((dialogBox.clientWidth - oldWidth)/2)) + "px";
+                    dialogBox.style.top = (oldOffsetTop - ((dialogBox.clientHeight - oldHeight)/2)) + "px";
+                }
                 // Resize and position the title, contents, and footer
                 let dialogTitle = dialogBox.querySelector(".title");
                 let dialogContent = dialogBox.querySelector(".content");
@@ -334,6 +339,147 @@ SmartModule.addModule("ui", (
                 let titleHeight = dialogTitle.clientHeight;
                 let footerHeight = dialogFooter.clientHeight;
                 dialogContent.style.height = (dialogBoxHeight-(titleHeight + footerHeight)) + "px";
+            }
+
+            // Create a grid of grips for resizing the dialog box.  The grid is split into 9 parts, with the center-most cell being ignored and the edge columns/rows being only a few pixels wide/high
+            // This function could be reduced in size by using loops and numbered classes/elements instead of named.  Using readable names for the sake of development for now.
+            function addDialogResizingGrips(box) {
+
+                // Create the 3x3 grid for the resizing grips
+                let grid = document.createElement("div");
+                grid.classList.add("sm-dialog-gripbox");
+                const elType = "div";
+
+                // Create the nine resize grips
+                let topGripLeft = document.createElement(elType);
+                let topGripMid = document.createElement(elType);
+                let topGripRight = document.createElement(elType);
+                let midGripLeft = document.createElement(elType);
+                let midGripMid = document.createElement(elType);
+                let midGripRight = document.createElement(elType);
+                let bottomGripLeft = document.createElement(elType);
+                let bottomGripMid = document.createElement(elType);
+                let bottomGripRight = document.createElement(elType);
+
+                // Apply the necessary classes
+                topGripLeft.classList.add("sm-dialog-grip", "sm-grip-topleft");
+                topGripMid.classList.add("sm-dialog-grip", "sm-grip-topmiddle");
+                topGripRight.classList.add("sm-dialog-grip", "sm-grip-topright");
+                midGripLeft.classList.add("sm-dialog-grip", "sm-grip-midleft");
+                midGripMid.classList.add("sm-dialog-grip", "sm-grip-midmiddle");
+                midGripRight.classList.add("sm-dialog-grip", "sm-grip-midright");
+                bottomGripLeft.classList.add("sm-dialog-grip", "sm-grip-bottomleft");
+                bottomGripMid.classList.add("sm-dialog-grip", "sm-grip-bottommiddle");
+                bottomGripRight.classList.add("sm-dialog-grip", "sm-grip-bottomright");
+                
+                // Append the grips to the grip box (grid)
+                grid.append(topGripLeft);
+                grid.append(topGripMid);
+                grid.append(topGripRight);
+                grid.append(midGripLeft);
+                grid.append(midGripMid);
+                grid.append(midGripRight);
+                grid.append(bottomGripLeft);
+                grid.append(bottomGripMid);
+                grid.append(bottomGripRight);
+
+                // Add the grip areas to the dialog / element
+                box.append(grid);
+
+                // Add resizing events to the grips
+                var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+                // Let us know which grip is currently being dragged
+                let activeGrip = false;
+
+                // Apply events to all grips
+                let grips = Array.from(grid.querySelectorAll(elType));
+                grips.map(g => {
+                    g.onmousedown = e => {
+                        activeGrip = e.target.classList[1].replace("sm-grip-", ""); // Let us know which grip is currently being dragged
+                        dragMouseDown(e, box, activeGrip);
+                    }
+                });
+
+                function dragMouseDown(e, domElement, gripName) {
+                    e = e || window.event;
+                    e.preventDefault();
+                    let grip = e.target;
+                    console.log(domElement);
+                    // get the mouse cursor position at startup:
+                    let posX = e.clientX;
+                    let posY = e.clientY;
+                    let startGeometry = domElement.getBoundingClientRect(); // Get the starting dimensions for the resizable element
+                    let newHeight = startGeometry.height;
+                    let newWidth = startGeometry.width;
+                    let offsetLeft = startGeometry.x;
+                    let offsetTop = startGeometry.y;                    
+                    let startClickPoint = [posX, posY];
+
+                    document.onmouseup = function() {
+                        // stop resizing when mouse button is released:
+                        document.onmouseup = null;
+                        document.onmousemove = null;
+                        posX = 0;
+                        posY = 0;
+                        startGeometry = domElement.getBoundingClientRect(); // Get the starting dimensions for the resizable element
+                        newHeight = startGeometry.height;
+                        newWidth = startGeometry.width;
+                        offsetLeft = startGeometry.x;
+                        offsetTop = startGeometry.y;                        
+                        startClickPoint = [posX, posY];                        
+                    }
+                    // call a function whenever the cursor moves:
+                    document.onmousemove = function(e) {
+                        e = e || window.event;
+                        e.preventDefault();
+                        let containerPadding = 8; // Don't allow the box to be resized outside of the container with this set padding
+                        console.log(gripName, window.innerHeight);
+                        // Don't allow going outside window bounds
+                        if(e.clientX > window.innerWidth - (containerPadding + 1) || e.clientX < (containerPadding + 1) || e.clientY > window.innerHeight - (containerPadding + 1) || e.clientY < (containerPadding + 1) ) return;
+                        // console.log(`Mouse: ${e.clientX}, ${e.clientY} || New Height: ${newHeight}`);
+
+                        if(gripName == "bottommiddle") {
+                            newHeight = startGeometry.height + (e.clientY - startClickPoint[1]);
+                        }
+                        if(gripName == "bottomright") {
+                            newWidth = startGeometry.width + (e.clientX - startClickPoint[0]);
+                            newHeight = startGeometry.height + (e.clientY - startClickPoint[1]);
+                        }
+                        if(gripName == "midright") {
+                            newWidth = startGeometry.width + (e.clientX - startClickPoint[0]);
+                        }
+                        if(gripName == "topmiddle") {
+                            newHeight = startGeometry.height + (startClickPoint[1] - e.clientY);
+                            offsetTop = -3 + e.clientY + "px";                            
+                        }
+                        if(gripName == "midleft") {
+                            newWidth = startGeometry.width + (startClickPoint[0] - e.clientX);
+                            offsetLeft = -3 + e.clientX + "px";      
+                        }
+                        if(gripName == "topleft") {
+                            newWidth = startGeometry.width + (startClickPoint[0] - e.clientX);
+                            newHeight = startGeometry.height + (startClickPoint[1] - e.clientY);
+                            offsetLeft = -3 + e.clientX + "px";   
+                            offsetTop = -3 + e.clientY + "px";   
+                        }
+                        if(gripName == "bottomleft") {
+                            newWidth = startGeometry.width + (startClickPoint[0] - e.clientX);
+                            newHeight = startGeometry.height + (e.clientY - startClickPoint[1]);
+                            offsetLeft = -3 + e.clientX + "px";   
+                        }
+                        if(gripName == "topright") {
+                            newWidth = startGeometry.width + (startClickPoint[0] - e.clientX);
+                            newHeight = startGeometry.height + (startClickPoint[1] - e.clientY);
+                            offsetLeft = -3 + e.clientX + "px";   
+                            offsetTop = -3 + e.clientY + "px";   
+                        }
+                        resizeDialog(domElement, newWidth, newHeight, true);
+                        domElement.style.left = offsetLeft;   
+                        domElement.style.top = offsetTop;                           
+                                                                         
+                    }
+                }
             }
 
             // Add any classes from options.classes.  Remove any previously added classes just in case
@@ -346,38 +492,38 @@ SmartModule.addModule("ui", (
             }
             // Dialog Boxes are their own object and have their own internal methods.  Dialog() is used as a class object
             function Dialog(box) {
-                let self = this;
                 this.node = box;
-                this.hide = function() {
-                    if(options.onClose) options.onClose(self);
-                    self.node.style.display = "none";
-                    return self;
-                }
-                this.show = function() {
-                    self.node.style.display = "block";
-                    return self;
-                }
-                this.resize = function(width,height) {
-                    resizeDialog(self.node, width, height);
-                    return self;
-                }
-                this.html = function(html) {
-                    if(html) { self.node.querySelector(".content").innerHTML = html; return self; }
-                    else return self.node.querySelector(".content").innerHTML;
-                }
-                this.title = function(html) {
-                    if(html) { self.node.querySelector(".title").innerHTML = html; return self; }
-                    else return self.node.querySelector(".title").innerHTML;                    
-                }
-                this.footer = function(html) {
-                    if(html) { self.node.querySelector(".footer").innerHTML = html; return self; }
-                    else return self.node.querySelector(".footer").innerHTML;                    
-                }
-                this.remove = function() {
-                    if(options.onClose) options.onClose(self);
-                    self.node.parentNode.removeChild(self.node);
-                }           
             }
+            Dialog.prototype.hide = function() {
+                if(options.onClose) options.onClose(this);
+                this.node.style.display = "none";
+                return this;
+            }
+            Dialog.prototype.show = function() {
+                this.node.style.display = "block";
+                return this;
+            }
+            Dialog.prototype.resize = function(width,height) {
+                resizeDialog(this.node, width, height);
+                return this;
+            }
+            Dialog.prototype.html = function(html) {
+                if(html) { this.node.querySelector(".content").innerHTML = html; return this; }
+                else return this.node.querySelector(".content").innerHTML;
+            }
+            Dialog.prototype.title = function(html) {
+                if(html) { this.node.querySelector(".title").innerHTML = html; return this; }
+                else return this.node.querySelector(".title").innerHTML;                    
+            }
+            Dialog.prototype.footer = function(html) {
+                if(html) { this.node.querySelector(".footer").innerHTML = html; return this; }
+                else return this.node.querySelector(".footer").innerHTML;                    
+            }
+            Dialog.prototype.remove = function() {
+                if(options.onClose) options.onClose(this);
+                this.node.parentNode.removeChild(this.node);
+            }           
+            
             newDialogBox = new Dialog(dBox);
             return newDialogBox;
         }

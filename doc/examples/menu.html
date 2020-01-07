@@ -1,0 +1,198 @@
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <script src="../../src/sm.core.js"></script>
+    <body style="padding:0px;margin:0px;">
+
+    </body>
+</html>
+
+<script>
+    // Initialize the smart module API and include the menu module.  Also including the query and ui modules for dialogs.
+    const sm = new SmartModule({
+        modules: ["ui", "query", "menu"],
+        showModuleInfo : true,
+        init: (sm)=> {
+            init(sm);
+        }
+    });
+
+    function runAction(action) {
+        let div = document.createElement("div");
+        div.style = "padding-left:150px;"
+        div.innerHTML = action;
+        document.body.append(div);
+    }
+
+    function init(sm) {
+        window.sm_menu = sm.menu.createMenu([
+            { 
+                title : "File",
+                action :e=>runAction("file"),
+                submenu : [
+                    {   
+                        title : "Open",
+                        icon:"sm-icon-open",
+                        action :e=>runAction("open"),
+                    },
+                    {   
+                        title : "Save",
+                        action :e=>runAction("save"),
+                    },
+                    { 
+                        title : "Menu Test",
+                        action :e=>runAction("Menu Test"),
+                        submenu : [
+                            { 
+                                title : "Sub Menu Test 1",
+                                action :e=>runAction("Sub Menu Test 1"),
+                                submenu : [
+                                    { 
+                                        title : "Sub Menu 1",
+                                        action :e=>runAction("Sub Menu 1"),
+                                    },
+                                    { 
+                                        title : "Sub Menu 2",
+                                        action :e=>runAction("Sub Menu 2"),
+                                    },
+                                    { 
+                                        title : "Sub Menu 3",
+                                        action :e=>runAction("Sub Menu 3"),
+                                    },
+                                    { 
+                                        title : "Sub Menu 4",
+                                        action :e=>runAction("Sub Menu 4"),
+                                    }                                                                   
+                                ]                                  
+                            },
+                            { 
+                                title : "Sub Menu Test 2",
+                                action :e=>runAction("Sub Menu Test 2"),
+                                submenu : [
+                                    { 
+                                        title : "Sub Menu Alt 1",
+                                        action :e=>runAction("Sub Menu Alt 1"),
+                                    }                       
+                                ]                                  
+                            },                      
+                        ]  
+                    },
+                    "-",
+                    {
+                        title : "Exit",
+                        action :e=>runAction("exit"),
+                    }
+                ]
+            },
+            { 
+                title : "Edit",
+                action :e=>runAction("Edit"),
+                submenu : [
+                    {   
+                        title : "Copy",
+                        action :e=>runAction("Copy"),
+                    },
+                    {   
+                        title : "Cut",
+                        action :e=>runAction("Cut"),
+                    },
+                    { 
+                        title : "Paste",
+                        action :e=>runAction("Paste"),
+                        submenu : [
+                            { 
+                                title : "In Place",
+                                action :e=>runAction("In Place"),
+                            },
+                            { 
+                                title : "Without Formatting",
+                                action :e=>runAction("Without Formatting"),
+                            }                          
+                        ]  
+                    },
+                    {
+                        title : "Submenu Test",
+                        action :e=>runAction("Submenu Test"),
+                        submenu : [
+                            { 
+                                title : "Option 1",
+                                action :e=>runAction("Option 1"),
+                            },
+                            { 
+                                title : "Option 2",
+                                action :e=>runAction("Option 2"),
+                            }                          
+                        ] 
+                    }
+                ]
+            },
+            { 
+                title : "Options",
+                action :e=>runAction("Options"),
+                submenu : [
+                    {   
+                        title : "Baby Shark",
+                        action :e=>createExampleDialog(),
+                    },                    
+                    {   
+                        title : "Option 1",
+                        action :e=>runAction("Option 1"),
+                    },
+                    {   
+                        title : "Option 2",
+                        action :e=>runAction("Option 2"),
+                    },
+                    { 
+                        title : "Sub Options",
+                        action :e=>runAction("Sub Options"),
+                        submenu : [
+                            { 
+                                title : "Sub Option 1",
+                                action :e=>runAction("s1"),
+                                submenu : [
+                                    { 
+                                        title : "Sub Option 1",
+                                        action :e=>runAction("s1"),
+                                    }                      
+                                ]                                 
+                            },
+                            { 
+                                title : "Sub Option 2",
+                                action :e=>runAction("s2"),
+                            }                          
+                        ]  
+                    },
+                    {
+                        title : "Preferences",
+                        action :e=>runAction("prefs"),
+                    }
+                ]
+            }                      
+        ]);
+    } // end init()
+
+    // Create a new dialog box
+    function createExampleDialog() {
+        const newDialog = sm.ui.createDialog({
+            title : "The Whale Shark", 
+            html : `
+                The whale shark (Rhincodon typus) is a slow-moving, 
+                filter-feeding carpet shark and the largest known extant 
+                fish species. The largest confirmed individual had a length
+                of 18.8 m (62 ft)`,
+            width: 320,
+            height:"auto",
+            buttons : {
+                "Read More" : ()=>window.open("https://en.wikipedia.org/wiki/Whale_shark"),
+                "Ok" : (dialog)=>dialog.remove()
+            }
+        })
+    }
+</script>
