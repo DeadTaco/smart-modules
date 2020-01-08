@@ -428,7 +428,7 @@ SmartModule.addModule("ui", (
                 }
             }
         },        
-
+        activeDialogs : [],
         // Creates a dialog box object with provided options
         createDialog(options = {}) {
             let self = this;
@@ -536,13 +536,31 @@ SmartModule.addModule("ui", (
                 if(html) { this.node.querySelector(".footer").innerHTML = html; return this; }
                 else return this.node.querySelector(".footer").innerHTML;                    
             }
-            Dialog.prototype.remove = function() {
+            Dialog.prototype.remove = function(keepInMemory) {
                 if(options.onClose) options.onClose(this);
                 this.node.parentNode.removeChild(this.node);
-            }           
+                // keepInMemory will retain this element in memory, but remove it from the DOM completely
+                if(!keepInMemory) {
+                    for(let i = 0; i < self.activeDialogs.length; i++) {
+                        if(this == self.activeDialogs[i]) {
+                            self.activeDialogs.splice(i, 1);
+                        }
+                    }
+                }
+            }
             
             newDialogBox = new Dialog(dBox);
+            this.activeDialogs.push(newDialogBox);
             return newDialogBox;
+        },
+        // Remove all dialogs from the DOM and from the sm.ui.activeDialogs array
+        removeAllDialogs() {
+            let length = this.activeDialogs.length;
+            for(let i = 0; i < length; i++) {
+                this.activeDialogs[i].remove(true);
+                this.activeDialogs[i] = null;
+            }
+            this.activeDialogs = [];
         }
 
     }
