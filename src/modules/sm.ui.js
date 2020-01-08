@@ -127,12 +127,17 @@ SmartModule.addModule("ui", (
             if (dragElement) {
                 // if present, the provided drag element is where you drag the dom Element from:
                 dragElement.onmousedown = dragMouseDown;
-                domElement.onmousedown = ()=>{
+                domElement.onmousedown = evt=>{
+                    console.log(evt.target.onclick);
                     moveToTop(domElement);
-                }                
+                    if(evt.target.onclick) {
+                        evt.target.onclick();
+                    }
+                }
             } else {
                 // otherwise, move the dom element from anywhere inside the container:
                 domElement.onmousedown = evt=>{
+                    console.log(evt.target.onclick);
                     moveToTop(domElement);
                     dragMouseDown(evt);
                 }
@@ -456,7 +461,7 @@ SmartModule.addModule("ui", (
                 </div>
             `;
             let dBox = document.createElement("div");
-            dBox.classList.add("sm-dialog");
+            dBox.classList.add("sm-dialog", "sm-shadowed");
             dBox.innerHTML = newDialogHTML;
             document.body.append(dBox);
             this.makeModal(dBox, dBox.querySelector(".title"), document.body);  // Make this a floating, draggable modal dialog
@@ -466,7 +471,9 @@ SmartModule.addModule("ui", (
             dBox.querySelector(".content").innerHTML = html;
 
             // Dialog X button event
-            dBox.querySelector(".closedialog").onclick = function(){ newDialogBox.remove(); }
+            dBox.querySelector(".closedialog").onclick = function(e){ 
+                newDialogBox.remove();
+            }
 
             // Add buttons and their events to the dialog if they're defined.
             let footer = dBox.querySelector(".footer");
@@ -476,16 +483,17 @@ SmartModule.addModule("ui", (
                     footer.append(button);
                     button.innerHTML = key;
                     button.classList.add("sm-button");
-                    button.addEventListener("click", ()=>options.buttons[key](newDialogBox));
+                    button.onclick = ()=>options.buttons[key](newDialogBox);
                 });
             } else {
                 // Default "OK" button if not other buttons are defined
                 let button = document.createElement("button");
                 footer.append(button);
                 button.innerHTML = "Ok";
-                button.addEventListener("click", function(){
+                button.classList.add("sm-button");
+                button.onclick = function(e){
                     newDialogBox.remove();
-                });
+                };
             }
             // We have a dialog to work with, so get it prepared
             // Use internal resizeDialog function to set the dialog size

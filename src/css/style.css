@@ -1,3 +1,7 @@
+.sm-shadowed {
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
 .sm-dialog {
   padding: 0px;
   box-sizing: border-box;

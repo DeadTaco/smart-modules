@@ -10,6 +10,9 @@ $btn_transition_time: 0.25s;
 $color_btn_default:rgb(50,100,255);
 $color_btn_hover:rgb(255,255,200);
 
+.sm-shadowed {
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+}
 
 .sm-dialog {
     padding:0px;
