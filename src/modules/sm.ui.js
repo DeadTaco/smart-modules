@@ -128,7 +128,6 @@ SmartModule.addModule("ui", (
                 // if present, the provided drag element is where you drag the dom Element from:
                 dragElement.onmousedown = dragMouseDown;
                 domElement.onmousedown = evt=>{
-                    console.log(evt.target.onclick);
                     moveToTop(domElement);
                     if(evt.target.onclick) {
                         evt.target.onclick();
@@ -137,7 +136,6 @@ SmartModule.addModule("ui", (
             } else {
                 // otherwise, move the dom element from anywhere inside the container:
                 domElement.onmousedown = evt=>{
-                    console.log(evt.target.onclick);
                     moveToTop(domElement);
                     dragMouseDown(evt);
                 }
