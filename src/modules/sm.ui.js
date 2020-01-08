@@ -294,7 +294,11 @@ SmartModule.addModule("ui", (
         },        
         // Create a grid of grips for resizing the dialog box.  The grid is split into 9 parts, with the center-most cell being ignored and the edge columns/rows being only a few pixels wide/high
         // This function could be reduced in size by using loops and numbered classes/elements instead of named.  Using readable names for the sake of development for now.
-        makeResizable(box) {
+        makeResizable(box, options = {}) {
+            let maxWidth = options.maxWidth || 10000;
+            let maxHeight = options.maxHeight || 10000;
+            let minWidth = options.minWidth || 150;
+            let minHeight = options.minHeight || 150;            
             let self = this;
             // Create the 3x3 grid for the resizing grips
             let grid = document.createElement("div");
@@ -421,6 +425,12 @@ SmartModule.addModule("ui", (
                         newHeight = startGeometry.height + (startClickPoint[1] - e.clientY);
                         offsetTop = -3 + e.clientY + "px";   
                     }
+                    // Keep us within the provided size constraints
+                    if(newWidth > maxWidth) newWidth = maxWidth;
+                    if(newWidth < minWidth) newWidth = minWidth;
+                    if(newHeight > maxHeight) newHeight = maxHeight;
+                    if(newHeight < minHeight ) newHeight = minHeight;
+
                     self.resizeDialog(domElement, newWidth, newHeight, true);
                     domElement.style.left = offsetLeft;   
                     domElement.style.top = offsetTop;                           

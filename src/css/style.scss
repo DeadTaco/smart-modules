@@ -35,6 +35,7 @@ $color_btn_hover:rgb(255,255,200);
         padding:5px;
         line-height: 1.3em;
         box-sizing:border-box;
+        overflow-y:scroll;
     }
     .footer {
         background-color:$color_dialog_footer_background;
