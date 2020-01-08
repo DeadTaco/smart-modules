@@ -1,11 +1,26 @@
 # The Smart Modules API
 
-***API Version 0.0.2a -- Documentation version 1.1***
+***API Version 0.0.3 -- Documentation version 1.2***
 
 The Smart Module API is currently in development and is a small ES6+ Javascript framework for wrapping modules into a single Javascript object.  Each module has access to other modules that are loaded, as well as any variables within the API itself.
 
+## 0.0.3 What's new
+
+* Smart Module versioning is dropping the lettering for version "alpha" to make parsing the version easier for version checks
+  * 0.0.2a is now 0.0.3
+* The sm.eventmapper.js module has become part of the core Smart Module API to handle mobile and desktop events simultaneously
+  * This isn't an app-breaking change, but all apps updated to the 0.0.3a API will need to remove any references to the old event manager module to prevent "file missing" errors.
+* Modules can include an initialize() function which will automatically be run when the module is loaded
+* sm.menu.js - Menu module added for top-of-window menu systems.
+* sm.ui.js - Added dialog boxes and ability to turn any element into a modal, draggable element
+* Can now extend existing modules with the addModule function
+
 ## To Do
 
+* Modify all click and mouse events to mobile-friendly touch events
+  * Will be adding a smart module event manager that handles both simultaneously
+  * sm.ui.js - Fix touch events for mobile devices
+  * sm.menu.js - Fix touch events for mobile devices* 
 * Automatically load required modules for any modules requesting them
 * fileio module needs ability to upload files.  Currently, it can only receive files
 * sm.menu.js needs to keep root menus open when the mouse leaves the menu group
@@ -13,15 +28,10 @@ The Smart Module API is currently in development and is a small ES6+ Javascript 
 * Animation module to be completed
   * Add easing capability
   * Add animation chaining capability
-* sm.ui.js - Add ability to resize dialogs and modal elements
 * Memory management: Module cleanup to make sure prototypes are in use where applicable
+* Complete documentation for all modules and their functions
 
-## What's new
 
-* Modules can include an initialize() function which will automatically be run when the module is loaded
-* sm.menu.js - Menu module added for top-of-window menu systems.
-* sm.ui.js - Added dialog boxes and ability to turn any element into a modal, draggable element
-* Can now extend existing modules with the addModule function
 
 ## Getting Started
 

@@ -15,7 +15,7 @@ const SmartModule = (function() {
     let collapseLoader = false; // Collapses the loaded modules into a single line in the console - Set to false for debugging issues
     let instances = 0;          // PRIVATE -- Tell us if smartModule is already instantiated
     let activeInstance = null;  // If we only a allow a single instance of this library and an instance already exists, return it instead of creating a new instance
-    let version = "0.0.2a" ;
+    let version = "0.0.3" ;
     
     // The root functionality of the smartModule object - Please note the uppercase vs lowercase names for the API vs the loader
     function smartModule(options) {
@@ -360,23 +360,100 @@ SmartModule.addModule("animate", ({
 );
 
 
-
-// Tip for newer developers:
-// You can also define a module without using the addModule function by passing SmartModule
-// to itself and telling it to use its reference with a boolean operator
-// Note that this does NOT add a module to the SmartModule.modules list!  It is still
-// accessible with the this.root variable in your custom modules, however
-
-/*
-SmartModule.fn.myRandomModule = function(root) {
-    let $root = root(true);
-    function getRoot() { console.log("OK"); return $root; }
-    let myInternalFunctions = ({
-        get $root() { return $root },
-        getThis() {return $root},
-        getRoot() { return getRoot();}
-    });
-    myInternalFunctions.root = this;
-    return myInternalFunctions;
-}(SmartModule)
+/* 
+Smart Module Events Controller
+Sets up interactive events for the DOM and its elements
 */
+
+SmartModule.addModule("events", {
+    description: [
+      "events",
+      "[Native Module] DOM Event manager, including binding mobile and desktop events together"
+    ],
+    eventList: {},
+    onHover(elements, onhover, onleave) {
+        // Elements must be an array of DOM nodes, so let's convert it if not
+        if(typeof elements == "string") elements = Array.from(document.querySelectorAll(elements));
+        if(!Array.isArray(elements)) elements = [elements];
+        // Map the events
+        elements.map(elem => {
+            elem.mouseenter = onhover;
+            elem.ontouchstart = onhover;
+            elem.mouseleave = onleave;
+            elem.ontouchend = onleave;            
+        });
+    },
+    onDrag(elements, ondrag, onstopdrag) {
+        // Elements must be an array of DOM nodes, so let's convert it if not
+        if(typeof elements == "string") elements = Array.from(document.querySelectorAll(elements));
+        if(!Array.isArray(elements)) elements = [elements];
+        // Map the events
+        elements.map(elem => {
+            elem.mousedown = ondrag;
+            elem.ontouchstart = ondrag;
+            elem.mouseup = ondrag;
+            elem.ontouchend = onstopdrag;            
+        });
+    },    
+    add(querySelector, eventName, evt) {
+      let nodes;
+      if(typeof querySelector == "string") {
+        nodes = document.querySelectorAll(querySelector);
+      } else {  
+        nodes = querySelector;
+      }
+      Array.from(nodes).map(node => {
+        // Keep a tally of what events are added to an element.  For debugging as well as preventing duplicates
+        if (!this.eventList[node]) this.eventList[node] = {};
+        if (!this.eventList[node][eventName])
+          this.eventList[node][eventName] = "";
+        if (this.eventList[node][eventName] != "") {
+          // console.warn(`Warning: An element within "${querySelector}" already has an event bound to it named "${eventName}"!  This event being overwritten!`); // [DEBUG]
+          node.removeEventListener(eventName, this.eventList[node][eventName]);
+        }
+        this.eventList[node][eventName] = evt;
+        node.addEventListener(eventName, evt);
+      });
+      return nodes;
+    },
+    remove(querySelector, eventName) {
+      let nodes;
+      if(typeof querySelector == "string") {
+        nodes = document.querySelectorAll(querySelector);
+      } else {  
+        nodes = querySelector;
+      }
+      // Keep a tally of what events are removed from an element.  For debugging as well as preventing duplicates
+      Array.from(nodes).map(node => {
+        if (this.eventList[node]) {
+          // No events were bound to this element, so just return without doing anything.
+          if (this.eventList[node][eventName]) {
+            node.removeEventListener(eventName, this.eventList[node][eventName]);
+          }
+        }
+      });
+      return nodes;
+    },
+    removeAll(querySelector) {
+      let nodes;
+      if(typeof querySelector == "string") {
+        nodes = document.querySelectorAll(querySelector);
+      } else {  
+        nodes = querySelector;
+      }
+      // Keep a tally of what events are removed from an element.  For debugging as well as preventing duplicates
+      Array.from(nodes).map(node => {
+        if (this.eventList[node]) {
+          // No events were bound to this element, so just return without doing anything.
+          Object.keys(this.eventList[node]).map(key => {
+            if (this.eventList[node][key]) {
+              node.removeEventListener(key, this.eventList[node][key]);
+              console.log(`Removing ${key}`);
+            }
+          });
+        }
+      });
+      return nodes;
+    },
+   });
+  

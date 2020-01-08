@@ -127,6 +127,7 @@ SmartModule.addModule("ui", (
             if (dragElement) {
                 // if present, the provided drag element is where you drag the dom Element from:
                 dragElement.onmousedown = dragMouseDown;
+                dragElement.ontouchstart = dragMouseDown;
                 domElement.onmousedown = evt=>{
                     moveToTop(domElement);
                     if(evt.target.onclick) {
@@ -135,7 +136,7 @@ SmartModule.addModule("ui", (
                 }
             } else {
                 // otherwise, move the dom element from anywhere inside the container:
-                domElement.onmousedown = evt=>{
+                domElement.ontouchstart = domElement.onmousedown = evt=>{
                     moveToTop(domElement);
                     dragMouseDown(evt);
                 }
@@ -158,14 +159,18 @@ SmartModule.addModule("ui", (
                 // get the mouse cursor position at startup:                
                 startPos = [e.clientX - domElement.offsetLeft, e.clientY - domElement.offsetTop];
                 document.onmouseup = closeDragElement;
+                document.ontouchend = closeDragElement;
                 // call a function whenever the cursor moves:
                 document.onmousemove = elementDrag;
+                document.ontouchmove = elementDrag;
             }
           
             function elementDrag(e) {
                 e = e || window.event;
                 e.preventDefault();
-
+                if(e.type == "touchmove") {
+                    e = e.touches[0];
+                }
                 // Make sure the mouse is still within the container element.  If not, abort the operation.
                 if(e.clientX < options.container.offsetLeft || e.clientX < 0) {
                     return false;

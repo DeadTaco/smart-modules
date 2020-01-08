@@ -10,6 +10,8 @@
   font-size: 0.85em;
   font-family: Arial,sans-serif;
   position: absolute;
+  touch-action: none;
+  z-index: 1001;
 }
 
 .sm-dialog .title {

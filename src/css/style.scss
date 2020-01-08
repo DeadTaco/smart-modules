@@ -22,6 +22,8 @@ $color_btn_hover:rgb(255,255,200);
     font-size:0.85em;
     font-family:Arial,sans-serif;
     position:absolute;
+    touch-action: none;
+    z-index:1001;
     .title {
         background-color:$color_dialog_title_background;
         color:$color_dialog_title_foreground;
@@ -68,6 +70,7 @@ $color_btn_hover:rgb(255,255,200);
             pointer-events:all;
             box-sizing:border-box;
             border:0px solid black;
+            // touch-action: none;
             // &:hover {
             //     background-color:green;
             // }              
