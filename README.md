@@ -20,7 +20,8 @@ The Smart Module API is currently in development and is a small ES6+ Javascript 
 * Modify all click and mouse events to mobile-friendly touch events
   * Will be adding a smart module event manager that handles both simultaneously
   * sm.ui.js - Fix touch events for mobile devices
-  * sm.menu.js - Fix touch events for mobile devices* 
+  * sm.menu.js - Fix touch events for mobile devices*
+  * [Read this for fixing mobile device Hover Events](https://stackoverflow.com/questions/2851663/how-do-i-simulate-a-hover-with-a-touch-in-touch-enabled-browsers)
 * Automatically load required modules for any modules requesting them
 * fileio module needs ability to upload files.  Currently, it can only receive files
 * sm.menu.js needs to keep root menus open when the mouse leaves the menu group
