@@ -4,7 +4,15 @@
 
 The Smart Module API is currently in development and is a small ES6+ Javascript framework for wrapping modules into a single Javascript object.  Each module has access to other modules that are loaded, as well as any variables within the API itself.
 
-## 0.0.3 What's new
+## 0.0.4 What's new
+
+* Modules are now contained within their own subdirectory.  They must now be named module.js as a loading point.
+  * For example, `modules/sm.ui.js` is now `modules/ui/module.js`
+  * This shouldn't break any existing applications utilizing out-of-the-box modules, but is good to note in case you create your own modules
+  * This was done so each module can contain its own css and any other required files without impacting the other modules
+  * This documentation needs to be updated to reflect this change, which hasn't happened yet.
+
+## 0.0.3
 
 * Smart Module versioning is dropping the lettering for version "alpha" to make parsing the version easier for version checks
   * 0.0.2a is now 0.0.3
@@ -17,6 +25,8 @@ The Smart Module API is currently in development and is a small ES6+ Javascript 
 
 ## To Do
 
+* Actively working on a calendar module
+* Update documentation to reflect new module pathing
 * Modify all click and mouse events to mobile-friendly touch events
   * Will be adding a smart module event manager that handles both simultaneously
   * sm.ui.js - Fix touch events for mobile devices
