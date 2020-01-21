@@ -1,7 +1,7 @@
 "use strict";
 SmartModule.addModule("math", ( 
     {
-        description : ["sm.math.js", "Extended Math Functions"],
+        description : ["math", "Extended Math Functions"],
         requires : [],
         version : "1.0",
 // NUMERIC FUNCTIONS

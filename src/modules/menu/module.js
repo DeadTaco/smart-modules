@@ -1,15 +1,15 @@
 "use strict";
 SmartModule.addModule("menu", ( 
     {
-        description : ["sm.menu.js", "Classic Window Menus"],
+        description : ["menu", "Classic window dropdown menus"],
         requires : [],
         version : "0.1",
         initialize() {
             // Load the menu.css style sheet
             let link = document.createElement("link");
             link.rel = "stylesheet";
-            link.href=SmartModule.rootPath + "css/menu.css";
-            document.querySelector("head").append(link);            
+            link.href=SmartModule.rootPath + "modules/menu/menu.css";
+            document.querySelector("head").append(link);
         },
         // Create a full menu system with sub menus and actions
         createMenu(menuElements, container) {

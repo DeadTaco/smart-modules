@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------------------------------------------------------------
 sm.core.js
-Version 0.1 Alpha
+Version 0.0.4
 Smart Modules - Core functionality
 
 Written By Devin Crowley
@@ -15,7 +15,7 @@ const SmartModule = (function() {
     let collapseLoader = false; // Collapses the loaded modules into a single line in the console - Set to false for debugging issues
     let instances = 0;          // PRIVATE -- Tell us if smartModule is already instantiated
     let activeInstance = null;  // If we only a allow a single instance of this library and an instance already exists, return it instead of creating a new instance
-    let version = "0.0.3" ;
+    let version = "0.0.4" ;
     
     // The root functionality of the smartModule object - Please note the uppercase vs lowercase names for the API vs the loader
     function smartModule(options) {
@@ -280,8 +280,8 @@ SmartModule.loadModule = function(moduleName) {
     }
     if(!moduleName) throw "SmartModule.loadModule(): A module name or path is required but was not given!"
     let path = null;
-    if(moduleName.search(".js") !== -1) path = moduleName;  // If a URL is given, load that.  If not, use the modules/sm.modulename.js location
-    if(!path) path= `${SmartModule.rootPath}modules/sm.${moduleName}.js`;
+    if(moduleName.search(".js") !== -1) path = moduleName;  // If a URL is given, load that.  If not, use the modules/modulename/module.js file
+    if(!path) path= `${SmartModule.rootPath}modules/${moduleName}/module.js`;
     var scriptTag = document.createElement("script"); // create a script tag
     scriptTag.src = path; // set the source of the script to your script
     var scriptContainer = document.getElementsByTagName("script")[0].parentElement;    

@@ -32,8 +32,6 @@ The Smart Module API is currently in development and is a small ES6+ Javascript 
 * Memory management: Module cleanup to make sure prototypes are in use where applicable
 * Complete documentation for all modules and their functions
 
-
-
 ## Getting Started
 
 You will need to have the sm.core.js script loaded into your page.  It controls the loading of all other modules.
