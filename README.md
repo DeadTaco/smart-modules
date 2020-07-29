@@ -1,5 +1,7 @@
 # The Smart Modules API
 
+The Smart Modules API was discontinued but will remain here since it has many useful functions and libraries that I still use quite often.  It was discontinued after my knowledge of javascript expanded and I realized I was duplicating efforts with native functionality (modules) and other libraries such as React.  After I learned React, I realized that SmartModules duplicated a bunch of the same functionality so it was put aside.
+
 ***API Version 0.0.3 -- Documentation version 1.2***
 
 The Smart Module API is currently in development and is a small ES6+ Javascript framework for wrapping modules into a single Javascript object.  Each module has access to other modules that are loaded, as well as any variables within the API itself.
